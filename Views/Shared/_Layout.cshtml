@@ -3,19 +3,19 @@
    
     
 
-    METRO.Models.MyDataEntities de = new METRO.Models.MyDataEntities();
-    string date = System.DateTime.Now.ToShortDateString();
-    int hour = System.DateTime.Now.Hour;
-    METRO.Models.hit h = de.hits.Where(x => x.count_time == hour).First();
-    if(h.count_date==date)
-    {
-        h.count_no++;
-    }
-    else
-    {
-        h.count_date = date;
-        h.count_no = 1;
-    }
+    //METRO.Models.MyDataEntities de = new METRO.Models.MyDataEntities();
+    //string date = System.DateTime.Now.ToShortDateString();
+    //int hour = System.DateTime.Now.Hour;
+    //METRO.Models.hit h = de.hits.Where(x => x.count_time == hour).First();
+    //if(h.count_date==date)
+    //{
+    //    h.count_no++;
+    //}
+    //else
+    //{
+    //    h.count_date = date;
+    //    h.count_no = 1;
+    //}
     
     //de.Entry(h).State = System.Data.EntityState.Modified;
     //de.SaveChanges();

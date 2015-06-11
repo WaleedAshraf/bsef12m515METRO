@@ -142,16 +142,16 @@
                                         </div>
                                     </div>
                                     @{
-                                        if (Session["USER"] != null)
-                                        {
-                                            <div class="choose">
-                                                <ul class="nav nav-pills nav-justified">
-                                                    <li><a id="addToWish" onclick="WishList(@pro.product_id)" href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                                    <li><a id="addToCart" onclick="Cart(@pro.product_id)" href="#"><i class="glyphicon glyphicon-shopping-cart"></i>Add to Cart</a></li>
-                                                   
-                                                </ul>
-                                            </div>
-                                        }
+                            if (Session["USER"] != null)
+                            {
+                                <div class="choose">
+                                    <ul class="nav nav-pills nav-justified">
+                                        <li><a id="addToWish" onclick="WishList(@pro.product_id)" href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+                                        <li><a id="addToCart" onclick="Cart(@pro.product_id)" href="#"><i class="glyphicon glyphicon-shopping-cart"></i>Add to Cart</a></li>
+
+                                    </ul>
+                                </div>
+                            }
                                     }
 
                                 </div>
@@ -160,7 +160,11 @@
 
 
 
+                        <input id="count" value="" hidden />
+
                     </div><!--features_items-->
+                    <div id="pagi">                        
+                    </div>
                 </div>
             </div>
         </div>
@@ -204,11 +208,22 @@
 
         $.post("/AllProducts/Search", { type: type, id: text, min: min, max: max },
             function (data) {
-                $("#searchResult").empty().append(data);
+                $("#searchResult").empty().append(data.result);
+                $("#pagi").empty().append(data.page);               
             });
     }
+    function pageData(x) {
+        var type = $("#searchType").text();
+        var text = $("#searchText").val();
+        var min = $("#min_val").val();
+        var max = $("#max_val").val();
+        var pageNo = x;
 
-
+        $.post("/AllProducts/PageData", { type: type, id: text, min: min, max: max,pageNo:pageNo },
+            function (data) {
+                $("#searchResult").empty().append(data.result);                
+            });
+    }
     document.getElementById("min_val").onchange = function () {
         $("#min_text").text("Min : " + $("#min_val").val());
     }

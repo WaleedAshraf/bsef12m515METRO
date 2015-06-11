@@ -19,7 +19,7 @@
 
 
 <body>
-   
+   <section>
         <!--slider-->
         <div class="container">
             <div class="row">
@@ -188,7 +188,7 @@
                             }
                         </div><!--/category-products-->
 
-                       
+
                     </div>
                 </div>
 
@@ -221,12 +221,15 @@
                                     }
                                 </div>
                             </div>
-                        }
-                    </div><!--features_items-->
-
-                    <!--top liked-->
-                    <div class="features_items" >
+                        }                       
                         
+
+                    </div><!--features_items-->
+                    <div id="pagi">
+                    </div>
+                    <!--top liked-->
+                    <div class="features_items">
+
                         <h2 class="title text-center">Most Liked</h2>
                         @foreach (var pro in y)
                         {
@@ -259,53 +262,43 @@
             </div>
         </div>
     </section>
+
+
     
 </body>
 
 
 <script>
 
-    $(function () {
-        var availableTags = [
-          "ActionScript",
-          "AppleScript",
-          "Asp",
-          "BASIC",
-          "C",
-          "C++",
-          "Clojure",
-          "COBOL",
-          "ColdFusion",
-          "Erlang",
-          "Fortran",
-          "Groovy",
-          "Haskell",
-          "Java",
-          "JavaScript",
-          "Lisp",
-          "Perl",
-          "PHP",
-          "Python",
-          "Ruby",
-          "Scala",
-          "Scheme"
-        ];
-        $("#searchText").autocomplete({
-            source: availableTags
-        });
-    });
-
-
-
-
-
-
-
-
-
-
-
-
+    //$(function () {
+    //    var availableTags = [
+    //      "ActionScript",
+    //      "AppleScript",
+    //      "Asp",
+    //      "BASIC",
+    //      "C",
+    //      "C++",
+    //      "Clojure",
+    //      "COBOL",
+    //      "ColdFusion",
+    //      "Erlang",
+    //      "Fortran",
+    //      "Groovy",
+    //      "Haskell",
+    //      "Java",
+    //      "JavaScript",
+    //      "Lisp",
+    //      "Perl",
+    //      "PHP",
+    //      "Python",
+    //      "Ruby",
+    //      "Scala",
+    //      "Scheme"
+    //    ];
+    //    $("#searchText").autocomplete({
+    //        source: availableTags
+    //    });
+    //});
 
     document.getElementById("searchButton").onclick = function () {
         proCheck()
@@ -318,10 +311,22 @@
 
         $.post("/Home/Search", { type: type, id: text ,min:min,max:max },
             function (data) {
-                $("#searchResult").empty().append(data);
+                $("#searchResult").empty().append(data.result);
+                $("#pagi").empty().append(data.page);
             });
     }
+    function pageData(x) {
+        var type = $("#searchType").text();
+        var text = $("#searchText").val();
+        var min = $("#min_val").val();
+        var max = $("#max_val").val();
+        var pageNo = x;
 
+        $.post("/AllProducts/PageData", { type: type, id: text, min: min, max: max, pageNo: pageNo },
+            function (data) {
+                $("#searchResult").empty().append(data.result);
+            });
+    }
     function WishList(a) {
 
         var pro_id = a;
