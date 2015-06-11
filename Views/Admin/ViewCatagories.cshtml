@@ -1,0 +1,100 @@
+﻿@model IEnumerable<METRO.Models.catagory>
+
+@{
+    ViewBag.Title = "ViewCatagories";
+    Layout = "~/Views/Shared/_Admin_Header.cshtml";
+    Session["Page"] = "AllCatagories";
+}
+
+<body>
+    <div class="ch-container">
+        <div class="row">
+
+            <div id="content" class="col-lg-10 col-sm-10">
+                <!-- content starts -->
+                <div>
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="/Admin/Dashboard">Home</a>
+                        </li>
+                        <li>
+                            <a href="/Admin/ViewCatagories">Catagories</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <div class="box col-md-12">
+                        <div class="box-inner">
+                            <div class="box-header well" data-original-title="">
+                                <h2><i class="glyphicon glyphicon-user"></i> Catagories</h2>
+
+                            </div>
+                            <div class="box-content">
+                                <table class="table table-striped table-bordered bootstrap-datatable datatable responsive">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Tag</th>    
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            @using (Html.BeginForm("AddCatagory", "Admin", FormMethod.Post))
+                                            {
+                                                <td><input type="text" class="form-control" name="catagories_id" placeholder="catagories_id" required /></td>
+                                                <td><input type="text" class="form-control" name="catagories_name" placeholder="catagories_name" required /></td>
+                                                <td><input type="text" class="form-control" name="catagories_tag" placeholder="catagories_tag" required /></td>
+                                                <td>
+                                                    <button type="submit" class="btn btn-success" id="AddButton">
+                                                        Add <i class="glyphicon glyphicon-zoom-in icon-white"></i>
+                                                    </button>                                                                                                       
+                                                </td>
+                                            }
+                                        </tr>                                  
+
+                                        @foreach (var c in Model)
+                                        {
+                                            <tr>
+                                                <td>@c.catagories_id</td>
+                                                <td>@c.catagories_name</td>
+                                                <td>@c.catagories_tag</td>
+                                                <td class="center">                                                  
+                                                    <a class="btn btn-info" href="~/Admin/CatagoryUpdate?id=@c.catagories_id">
+                                                        <i class="glyphicon glyphicon-edit icon-white"></i>
+                                                        Edit
+                                                    </a>
+                                                    <a class="btn btn-danger" onclick='return Delete()' href="~/Admin/CatagoryDelete?id=@c.catagories_id">
+                                                        <i class="glyphicon glyphicon-trash icon-white"></i>
+                                                        Delete
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div><!--/row-->
+                <!-- content ends -->
+            </div><!--/#content.col-md-0-->
+        </div><!--/fluid-row-->
+
+    </div><!--/.fluid-container-->
+</body>
+<script>
+    $(document).ready(function () {       
+        $("#AddButton").on("click", function () {
+            alert('Catagory has been added!');
+        });
+
+    });
+    function Delete()
+    {
+        alert('Catagory has been Deleted!');
+    }
+</script>

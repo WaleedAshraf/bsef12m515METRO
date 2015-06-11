@@ -1,0 +1,465 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Session["Page"] = "Product";
+}
+@using METRO.Models;
+
+
+@{
+    List<product> x = ViewBag.Pro;
+    List<review> rev = ViewBag.Rev;
+}
+
+@model IEnumerable<METRO.Models.catagory>
+
+
+<html>
+<head>
+    <!--META TAGS-->
+    <meta property="title" content="@x.ElementAt(0).product_name" />
+    <meta property="site_name" content="METRO" />
+    <meta property="url" content="@(Request.Url.ToString())" />
+    <meta property="type" content="article" />
+    <meta property="description" content="@x.ElementAt(0).product_description" />
+    <!--META TAGS-->
+
+
+    <title>METRO</title>
+    <!-- Add jQuery library -->
+
+    <script type="text/javascript" src="~/Scripts/jquery-1.10.1.min.js"></script>
+    <!-- Add fancyBox main JS and CSS files -->
+    <script type="text/javascript" src="~/Scripts/jquery.fancybox.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/css/jquery.fancybox.css" media="screen" />
+
+    <script type="text/javascript" src="~/Scripts/rating.js"></script>
+    <link rel="stylesheet" href="~/Content/css/rating.css" type="text/css" media="screen" title="Rating CSS">
+
+
+
+    <style type="text/css">
+        .fancybox-custom .fancybox-skin {
+            box-shadow: 0 0 50px #222;
+        }
+    </style>
+    <style type="text/css">
+        .view-product .myimg {
+            width: 250px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .view-product .smallImg {
+            width: 100px;
+            height: auto;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            $('.mylist').rating(function (vote, event) {
+                var status = $("#GVote");
+                status.text(vote);
+                status.val(vote);
+            });
+        });
+
+
+    </script>
+
+
+
+</head>
+<body>
+    <!--Facebook share and like-->
+    <div id="fb-root"></div>
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+  <!--Facebook share and like-->
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="left-sidebar">
+                        <div class="brands_products">
+                            <!--search_products-->
+                            <h2>Search</h2>
+                            <div class="brands-name" style="margin-bottom:20px">
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li>
+                                        <button id="searchType" data-toggle="dropdown" class="btn btn-default dropdown-toggle btn-block"> Type <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <input type="radio" id="all" name="1" value="1" checked="">
+                                                <label for="all">All</label>
+                                            </li>
+                                            @foreach (var drop in Model)
+                                            {
+                                                <li>
+                                                    <input type="radio" id="@drop.catagories_id" name="1" value="1" checked="">
+                                                    <label for="@drop.catagories_id">@drop.catagories_tag</label>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </li>
+                                    <li><input id="searchText" type="text" placeholder="Search" class="form-control" /></li>
+                                    <li><label id="min_text" class="form-control"></label></li>
+                                    <li><input id="min_val" type="range" value="0" min="0" max="100000" step="1" placeholder="Min Price" class="form-control" style="background-color:lightskyblue;height:4px; margin-top:10px; margin-bottom:10px;" /></li>
+                                    <li><label id="max_text" class="form-control"></label></li>
+                                    <li><input id="max_val" type="range" min="0" max="100000" step="1" placeholder="Max Price" class="form-control" style="background-color:lightskyblue;height:4px; margin-top:10px; margin-bottom:10px;" /></li>
+                                    <li><button id="searchButton" class="glyphicon glyphicon-search btn btn-default btn-block" value="Search">Search</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <h2>Category</h2>
+
+                        <div class="panel-group category-products" id="accordian">
+                            <!--category-productsr-->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordian" href="#Food">
+                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                            Food
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="Food" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul>
+                                            @foreach (var c in Model)
+                                            {
+                                                if (c.catagories_id.Contains("F"))
+                                                {
+                                                    <li><a href="/AllProducts/Index?type=@(c.catagories_id.Trim())&id=">@c.catagories_name</a></li>
+                                                }
+                                            }
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordian" href="#Electric">
+                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                            Electric
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="Electric" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul>
+                                            @foreach (var c in Model)
+                                            {
+                                                if (c.catagories_id.Contains("T"))
+                                                {
+                                                    <li><a href="/AllProducts/Index?type=@(c.catagories_id.Trim())&id=">@c.catagories_name</a></li>
+                                                }
+                                            }
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            @foreach (var c in Model)
+                            {
+                                if (c.catagories_id.Contains("N"))
+                                {
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title"><a href="/AllProducts/Index?type=@(c.catagories_id.Trim())&id=">@c.catagories_name</a></h4>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            @foreach (var c in Model)
+                            {
+                                if (c.catagories_id.Contains("G"))
+                                {
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title"><a href="/AllProducts/Index?type=@(c.catagories_id.Trim())&id=">@c.catagories_name</a></h4>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div><!--/category-products-->
+                    </div>
+                </div>
+                <div class="col-sm-9 padding-right">
+                    <div class="product-details">
+                        <!--product-details-->
+                        <div class="col-sm-5">
+                            <div class="view-product">
+                                <a class="fancybox-effects-d fancybox-custom" style="display:normal" title="@x.ElementAt(0).product_name" href="~/Content/images/Product/@x.ElementAt(0).product_image">
+                                    <img style="width:250px;height:auto;" src="~/Content/images/Product/@x.ElementAt(0).product_image" />
+                                </a>
+
+                            </div>
+                            <div id="similar-product" class="carousel slide" data-ride="carousel">
+
+                                <!-- Wrapper for slides -->
+                                <div class="carousel-inner">
+                                    <div class="item active">
+                                        <a class="fancybox-effects-d fancybox-custom" title="@x.ElementAt(0).product_name" href="~/Content/images/Product/@x.ElementAt(0).image1"><img src="~/Content/images/Product/@x.ElementAt(0).image1" style="width:70px;height:auto" alt="@x.ElementAt(0).product_name"></a>
+                                        <a class="fancybox-effects-d fancybox-custom" title="@x.ElementAt(0).product_name" href="~/Content/images/Product/@x.ElementAt(0).image2"><img src="~/Content/images/Product/@x.ElementAt(0).image2" style="width:70px;height:auto" alt="@x.ElementAt(0).product_name"></a>
+                                        <a class="fancybox-effects-d fancybox-custom" title="@x.ElementAt(0).product_name" href="~/Content/images/Product/@x.ElementAt(0).image3"><img src="~/Content/images/Product/@x.ElementAt(0).image3" style="width:70px;height:auto" alt="@x.ElementAt(0).product_name"></a>
+                                    </div>
+                                    <div class="item">
+                                        <a class="fancybox-effects-d fancybox-custom" title="@x.ElementAt(0).product_name" href="~/Content/images/Product/@x.ElementAt(0).image1"><img src="~/Content/images/Product/@x.ElementAt(0).image1" style="width:70px;height:auto" alt="@x.ElementAt(0).product_name"></a>
+                                        <a class="fancybox-effects-d fancybox-custom" title="@x.ElementAt(0).product_name" href="~/Content/images/Product/@x.ElementAt(0).image2"><img src="~/Content/images/Product/@x.ElementAt(0).image2" style="width:70px;height:auto" alt="@x.ElementAt(0).product_name"></a>
+                                        <a class="fancybox-effects-d fancybox-custom" title="@x.ElementAt(0).product_name" href="~/Content/images/Product/@x.ElementAt(0).image3"><img src="~/Content/images/Product/@x.ElementAt(0).image3" style="width:70px;height:auto" alt="@x.ElementAt(0).product_name"></a>
+                                    </div>
+                                    <div class="item">
+                                        <a class="fancybox-effects-d fancybox-custom" title="@x.ElementAt(0).product_name" href="~/Content/images/Product/@x.ElementAt(0).image1"><img src="~/Content/images/Product/@x.ElementAt(0).image1" style="width:70px;height:auto" alt="@x.ElementAt(0).product_name"></a>
+                                        <a class="fancybox-effects-d fancybox-custom" title="@x.ElementAt(0).product_name" href="~/Content/images/Product/@x.ElementAt(0).image2"><img src="~/Content/images/Product/@x.ElementAt(0).image2" style="width:70px;height:auto" alt="@x.ElementAt(0).product_name"></a>
+                                        <a class="fancybox-effects-d fancybox-custom" title="@x.ElementAt(0).product_name" href="~/Content/images/Product/@x.ElementAt(0).image3"><img src="~/Content/images/Product/@x.ElementAt(0).image3" style="width:70px;height:auto" alt="@x.ElementAt(0).product_name"></a>
+                                    </div>
+
+                                </div>
+
+                                <!-- Controls -->
+                                <a class="left item-control" href="#similar-product" data-slide="prev">
+                                    <i class="fa fa-angle-left"></i>
+                                </a>
+                                <a class="right item-control" href="#similar-product" data-slide="next">
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-7">
+                            <div class="product-information">
+                                <!--/product-information-->
+                                
+                                <h2>@x.ElementAt(0).product_name</h2>
+                                <p>Web ID: @x.ElementAt(0).product_id</p>
+                                <span>
+                                    <span>PKR : @x.ElementAt(0).product_price</span>
+                                    <br />
+                                    <text style="font-size:15px">
+                                        @x.ElementAt(0).product_description
+                                    </text>
+                                    <br />
+                                    @if (x.ElementAt(0).product_off != "")
+                                    {
+                                        <label style="font-size:15px">OFF : @x.ElementAt(0).product_off</label>
+                                    }
+                                    <br />
+                                    @{
+                                        if (Session["USER"] != null)
+                                        {
+                                            <button type="button" id="addToWish" onclick="WishList(@x.ElementAt(0).product_id)" class="btn btn-sm">
+                                                <i class="fa fa-star"></i>
+                                                Add to WishList
+                                            </button>
+                                            <button type="button" id="addToCart" onclick="Cart(@x.ElementAt(0).product_id)" class="btn btn-sm">
+                                                <i class="glyphicon glyphicon-shopping-cart"></i>
+                                                Add to Cart
+                                            </button>
+                                            <button type="button" id="addToLike" onclick="Like(@x.ElementAt(0).product_id)" class="btn btn-sm">
+                                                <i class="glyphicon glyphicon-thumbs-up"></i>
+                                            </button>
+                                        }
+}
+                                </span>
+                                <br />
+                                <div class="fb-share-button" data-href="@Request.Url.ToString()" data-layout="button_count"></div>
+                            </div><!--/product-information-->
+                        </div>
+                    </div>
+
+                </div><!--/product-details-->
+
+                <div class="category-tab col-sm-9 pull-right">
+                    <!--category-tab-->
+                    <div class="col-sm-12">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#reviews" data-toggle="tab">Reviews (@x.ElementAt(0).reviews.Count())</a></li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+
+
+                        <div class="tab-pane fade active in" id="reviews">
+                            <div class="col-sm-12">
+
+                                @foreach (var temp in rev)
+                                {
+                                    <ul>
+                                        <li><a href=""><i class="fa fa-user"></i>@(temp.customer_firstname) @(temp.customer_lastname)</a></li>
+                                        <li><a href=""><i class="fa fa-clock-o"></i>@temp.review_time_added</a></li>
+                                        <li><a href=""><i class="fa fa-calendar-o"></i>@temp.review_date_added</a></li>
+                                        @{
+                                            if (Session["ADMIN"] != null)
+                                            {
+                                                <li ><button onclick="delCom(@temp.review_id)" class="btn btn-default">Remove</button></li>
+                                            }
+                                        }
+                                    </ul>
+                                    <div class="pull-right">                                      
+                                        <ul>
+                                            @{
+                                                for (int lop = 0; lop < @temp.review_rating; lop++)
+                                                {
+                                                    <li class="star fullStar "></li>
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                    <p>@temp.review_text</p>
+                                    <br />
+                                    
+                                    <br />
+                                }
+
+                                @{
+                                    if (Session["USERID"] != null)
+                                    {
+                                        <p><b>Write Your Review</b></p>
+                                        <form action="/Product/Comment" method="post">
+
+                                            <textarea name="review_text" required maxlength="180"></textarea>
+                                            <div class="mylist">
+                                                <input type="radio" name="example" class="rating" value="1" />
+                                                <input type="radio" name="example" class="rating" value="2" />
+                                                <input type="radio" name="example" class="rating" value="3" />
+                                                <input type="radio" name="example" class="rating" value="4" />
+                                                <input type="radio" name="example" class="rating" value="5" />
+                                            </div>
+                                            <input id="product_id" name="product_id" value="@x.ElementAt(0).product_id" hidden />
+                                            <input id="user_id" name="user_id" value="@(Session["USERID"].ToString())" hidden />
+                                            <input id="GVote" name="given_vote" hidden />
+                                            <button type="submit" class="btn btn-default pull-right">
+                                                Submit
+                                            </button>
+                                            <br />
+                                            <br />
+
+                                        </form>
+                                    }
+                                    else if (Session["USERID"] == null)
+                                    {
+                                        <div class="pull-center"><a href="/Login/Index"><strong>Login</strong></a> to write your review!</div>
+                                    }
+
+                                }
+
+                                <br />
+                                <br />
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div><!--/category-tab-->
+
+
+
+            </div>
+        </div>
+    </section>
+
+
+
+</body>
+</html>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".fancybox").fancybox();
+        $(".fancybox-effects-d").fancybox({
+            padding: 0,
+            openEffect: 'elastic',
+            openSpeed: 200,
+
+            closeEffect: 'elastic',
+            closeSpeed: 200,
+
+            closeClick: true,
+
+            helpers: {
+                overlay: null
+            }
+        });
+    });
+
+    document.getElementById("searchButton").onclick = function () {
+        proCheck()
+    }
+    function Like(a) {
+        var pro_id = a;
+        var user_id = @(Session["USERID"])
+        $.post("/Product/AddLike", { pro_id: pro_id, user_id: user_id },
+            function (data) {
+                alert(data)
+            });
+    }
+
+    function WishList(a) {
+        var pro_id = a;
+        var user_id = @(Session["USERID"])
+
+        $.post("/Product/AddWish", { pro_id: pro_id, user_id: user_id },
+            function (data) {
+                  alert(data)
+            });
+    }
+    function Cart(a) {
+
+        var pro_id = a;
+        var user_id = @(Session["USERID"])
+
+        $.post("/Product/AddCart", { pro_id: pro_id, user_id: user_id },
+            function (data) {
+                alert(data)
+            });
+    }
+    function delCom(id){
+        var rev_id = id;
+        $.post("/Product/DeleteCom", {rev_id: rev_id},
+           function (data) {
+               window.location.reload();
+           });
+    }
+
+    function proCheck() {
+        var type = $("#searchType").text();
+        var text = $("#searchText").val();
+        var min = $("#min_val").val();
+        var max = $("#max_val").val();
+
+        $.post("/Product/Search", { type: type, id: text, min: min, max: max },
+            function (data) {
+                window.location.assign(data);
+            });
+    }
+
+    document.getElementById("min_val").onchange = function () {
+        $("#min_text").text("Min : " + $("#min_val").val());
+    }
+    $("#min_text").text("Min : " + $("#min_val").val());
+
+    document.getElementById("max_val").onchange = function () {
+        $("#max_text").text("Max : " + $("#max_val").val());
+        var y = $("#max_val").val().toString();
+        var x = document.getElementById("min_val");
+        x.setAttribute("max", y);
+    }
+    $("#max_text").text("Max : " + $("#max_val").val());
+    var y = $("#max_val").val().toString();
+    var x = document.getElementById("min_val");
+    x.setAttribute("max", y);
+
+</script>

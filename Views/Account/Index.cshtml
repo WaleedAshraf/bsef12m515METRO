@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Session["Page"] = "Account";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+     
+}
+@using METRO.Models;
+@model METRO.Models.customer
+
+
+
+<div class="container">
+    <section style="padding-bottom: 50px; padding-top: 50px;">
+        <div class="row">
+           
+            <div class="col-md-8">
+               
+               
+                <div class="form-group col-md-8">
+                    <label>First Name</label>
+                    <text type="text" class="form-control">@Model.customer_firstname</text>
+                    <label>Last Name</label>
+                    <text type="text" class="form-control">@Model.customer_lastname</text>
+                    <label>Gender</label>
+                    <text type="text" class="form-control">@Model.customer_gender</text>
+                    <label>Email</label>
+                    <text type="text" class="form-control">@Model.customer_email</text>
+                    <label>Address</label>
+                    <textarea type="text" class="form-control" contenteditable="false" disabled>@Model.customer_address</textarea>
+                    <label>City</label>
+                    <text type="text" class="form-control">@Model.customer_city</text>
+                    <label>Telephone</label>
+                    <text type="text" class="form-control">@Model.customer_telephone</text>
+                    <label>Mobile</label>
+                    <text type="text" class="form-control">@Model.customer_mobile</text>
+                    <br />
+                    <a href="~/Account/Update?id=@Model.customer_id" class="btn btn-success">Update Details</a>
+                    <br /><br />
+                   
+                </div>
+            </div>
+        </div>
+        <!-- ROW END -->
+
+
+    </section>
+    <!-- SECTION END -->
+</div>
+<!-- CONATINER END -->

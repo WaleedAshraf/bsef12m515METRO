@@ -1,0 +1,144 @@
+﻿@model METRO.Models.customer
+
+@{
+    ViewBag.Title = "UserUpdate";
+    Layout = "~/Views/Shared/_Admin_Header.cshtml";
+    Session["Page"] = "AdminUsers";
+}
+
+
+<body>
+    <div class="ch-container">
+        <div class="row">
+
+            <div id="content" class="col-lg-10 col-sm-10">
+                <!-- content starts -->
+                <div>
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="/Admin/Dashboard">Home</a>
+                        </li>
+                        <li>
+                            <a href="/Admin/Users">Users</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <div class="box col-md-6">
+                        <div class="box-inner" style="border:thin;padding:10px">
+                            @using (Html.BeginForm("UpdateUser", "Admin", FormMethod.Post))
+                            {
+                                <input type="text" name="customer_id" hidden value="@Model.customer_id" />
+                                @Html.Label("First Name");                               
+                                <input name="customer_firstname" type="text" class="form-control" value="@Model.customer_firstname" required />                               
+                                @Html.Label("Last Name");
+                                <input name="customer_lastname" type="text" class="form-control" value="@Model.customer_lastname " required />
+                                @Html.Label("Gender");
+                                <input name="customer_gender" type="text" class="form-control" value="@Model.customer_gender" required>
+                                @Html.Label("Email");
+                                <input name="customer_email" type="email" class="form-control" value="@Model.customer_email" required>
+                                @Html.Label("Address");
+                                <textarea name="customer_address" class="form-control" value="@Model.customer_address" required>@Model.customer_address</textarea>
+                                @Html.Label("City");
+                                <input name="customer_city" type="text" class="form-control" value="@Model.customer_city" required />
+                                @Html.Label("Telephone");
+                                <input name="customer_telephone" type="number" class="form-control" value="@Model.customer_telephone" required />
+                                @Html.Label("Mobile");
+                                <input name="customer_mobile" type="number" class="form-control" value="@Model.customer_mobile" required />
+                                <input type="text" name="customer_password" hidden value="" />
+                                <br />
+                                <input type="submit" name="SubmitButton" id="SubmitButton" class="btn btn-success" value="Update Details" />
+                                <br /><br />
+                            }
+                            
+                               
+                            
+                            <h3>Change Your Password</h3>
+                            <br />
+                            <label>Enter Old Password</label>
+                            <input type="password" class="form-control" name="pass1" id="pass1" required>
+                            <label>Enter New Password</label>
+                            <input type="password" class="form-control" name="pass2" id="pass2" required>
+                            <label>Confirm New Password</label>
+                            <input type="password" class="form-control" name="pass3" id="pass3" required />
+                            <br>
+                            <button id="passSub" type="submit" class="btn btn-default">Change Password</button>
+                            <label id="notif" style="color:orangered; font-family:'Times New Roman', Times, serif"></label>
+
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div><!--/row-->
+                <!-- content ends -->
+            </div><!--/#content.col-md-0-->
+        </div><!--/fluid-row-->
+
+    </div><!--/.fluid-container-->
+</body>
+<script>
+    $(document).ready(function () {
+        $("#SubmitButton").on("click", function () {
+            alert('Changes have been saved!');
+        });
+        document.getElementById("passSub").onclick = function () {
+            check()
+        };
+    });
+
+    document.getElementById("passSub").onclick = function () {
+        check()
+    };
+
+    document.getElementById("pass1").onclick = function () {
+        var message = $("#notif");
+        message.text(" ");
+    };
+
+    document.getElementById("pass2").onclick = function () {
+        var message = $("#notif");
+        message.text(" ");
+    };
+
+    document.getElementById("pass3").onclick = function () {
+        var message = $("#notif");
+        message.text(" ");
+    };
+
+    function check() {
+        var pass1 = $("#pass1").val().toString();
+        var pass2 = $("#pass2").val().toString();
+        var pass3 = $("#pass3").val().toString();
+        var message = $("#notif");
+        var alt =  document.getElementById("notif");
+        var user = @Model.customer_id;
+
+        if (pass2 != pass3) {
+            message.text("New Passwords Do Not Match!");
+
+        }
+        else if (pass1 == pass2 || pass1 == pass3) {
+            message.text("Type a new Password!");
+        }
+        else
+        {
+            $.post("/Account/ChangePassword", { pass1:pass1,pass2: pass2 , user : user },
+            function (data) {
+                if (data == "true") {
+                    message.text("Password Changed");
+                    alt.setAttribute("style","color:green");
+                    //var pasnew1 = $("#pass1");
+                    //var pasnew2 = $("#pass2");
+                    //var pasnew3 = $("#pass3");
+                    //pasnew1.val("");
+                    //pasnew2.val("");
+                    //pasnew3.val("");
+                }
+                else {
+                    message.text("Password not Changed! Maybe Old password not correct!");
+                }
+            });
+        }
+
+    }
+
+</script>

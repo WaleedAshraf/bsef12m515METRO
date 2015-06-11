@@ -1,0 +1,79 @@
+﻿@model METRO.Models.catagory
+
+@{
+    ViewBag.Title = "CatagoryUpdate";
+    Layout = "~/Views/Shared/_Admin_Header.cshtml";
+    Session["Page"] = "AllCatagories";
+}
+
+
+<body>
+    <div class="ch-container">
+        <div class="row">
+
+            <div id="content" class="col-lg-10 col-sm-10">
+                <!-- content starts -->
+                <div>
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="/Admin/Dashboard">Home</a>
+                        </li>
+                        <li>
+                            <a href="/Admin/ViewCatagories">Catagories</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <div class="box col-md-12">
+                        <div class="box-inner">
+                            <div class="box-header well" data-original-title="">
+                                <h2><i class="glyphicon glyphicon-user"></i> Catagories</h2>
+
+                            </div>
+                            <div class="box-content">
+                                <table class="table table-striped table-bordered bootstrap-datatable datatable responsive">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Tag</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            @using (Html.BeginForm("UpdateThisCatagory", "Admin", FormMethod.Post))
+                                            {
+                                                <td hidden><input type="text" class="form-control" name="catagories_id" value="@Model.catagories_id" required /></td>
+                                                <td><label type="text" class="form-control" value="@Model.catagories_id">@Model.catagories_id</label></td>
+                                                <td><input type="text" class="form-control" name="catagories_name" value="@Model.catagories_name" required /></td>
+                                                <td><input type="text" class="form-control" name="catagories_tag" value="@Model.catagories_tag" required /></td>
+                                                <td>
+                                                    <button type="submit" class="btn btn-success" id="UpdateButton">
+                                                        Update <i class="glyphicon glyphicon-zoom-in icon-white"></i>
+                                                    </button>
+                                                </td>
+                                            }
+                                        </tr>                                   
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div><!--/row-->
+                <!-- content ends -->
+            </div><!--/#content.col-md-0-->
+        </div><!--/fluid-row-->
+
+    </div><!--/.fluid-container-->
+</body>
+<script>
+    $(document).ready(function () {
+        $("#UpdateButton").on("click", function () {
+            alert('Catogry has been added!');
+        });
+
+    });
+</script>

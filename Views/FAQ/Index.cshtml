@@ -1,0 +1,128 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Session["Page"] = "FAQ";
+}
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <div class="container">
+        <br />
+        <br />
+        <br />
+
+
+
+        <div class="panel-group" id="accordion">
+            <div class="faqHeader">General questions</div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Is there a fee to become a METRO Customer?</a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        No, membership is absolutely free
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTen">How can I become a METRO customer?</a>
+                    </h4>
+                </div>
+                <div id="collapseTen" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        Please contact the staff at the center’s customer entrance and become a permanent METRO customer by going through following 4 simple steps:
+                        <ul>
+                            <li>Fill the registration form available at the customer entrance.</li>
+                            <li>Show the original copy of your trade Certificate of registration and provide a copy of the same.</li>
+                            <li>Copy of your National Identity card.</li>
+                            <li>Authorization letter (for authorized natural persons, associations and foundations)</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseEleven">How is quality ensured at METRO-Habib Cash & Carry Pakistan?</a>
+                    </h4>
+                </div>
+                <div id="collapseEleven" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <strong>METRO</strong> takes the initiative to train producers on international quality standards. Through maintaining a cold chain and stringent quality checks, our quality department ensures that you get quality products at all times.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faqHeader">10 good reasons why you should be a customer</div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Lowest possible prices</a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        Quality products available at best possible prices due to systematic buying approach.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Stock availability</a>
+                    </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        Computerized Goods Management System (GMS) ensures availability of products on demand
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="faqHeader">Steps to become a Customer</div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">STEPS</a>
+                    </h4>
+                </div>
+                <div id="collapseFour" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <ol>
+                            <li>Please visit your nearest METRO-Habib Cash & Carry wholesale center.</li>
+                            <li>From Customer Entrance obtain “Customer Registration Form”.</li>
+                            <li>Fill in the form. (You may ask for assistance from the staff present at customer entrance desks)</li>
+                            <li>Attach the following items with your Customer Registration Form before submission. Proof of business e.g. Copy of business NTN registration certificate OR Registration with any trade body OR Authority letter on company’s letter head etc., Copy of your National Identity Card.</li>
+                            <li>A temporary customer card shall be issued immediately. After due verification, a permanent card shall be issued. Permanent card can be picked up from that wholesale center after 10 days of form submission. This card can also be posted on customer’s address upon request.</li>
+
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+        </div> 
+       
+    </div>
+
+    <style>
+        .faqHeader {
+            font-size: 27px;
+            margin: 20px;
+        }
+    </style>
+</body>
+
+</html>
+
+
+

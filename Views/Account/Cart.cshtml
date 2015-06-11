@@ -1,0 +1,110 @@
+﻿@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Session["Page"] = "Cart";
+    int total = 0;
+}
+
+@using METRO.Models;
+@model IEnumerable<METRO.Models.product>
+
+<!-- wish Items-->
+<section id="cart_items">
+    <div class="container">
+        <div class="breadcrumbs">
+            <ol class="breadcrumb">
+                <li><a href="/Account/Index?id=@(Session["USERID"])">Account</a></li>
+                <li class="active">Cart</li>
+            </ol>
+        </div>
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed">
+                <thead>
+                    <tr class="cart_menu">
+                        <td class="image">Item</td>
+                        <td class="description">Name</td>
+                        <td class="price">Price</td>
+                        <td class=""></td>
+                    </tr>
+                </thead>
+                <tbody id="tab">
+                    @{
+                        foreach (var temp in Model)
+                        {
+                            total = total + int.Parse(temp.product_price);
+                            <tr>
+                                <td class="cart_product">
+                                    <a href="/Product?id=@temp.product_id"><img src="~/Content/images/Product/@temp.product_image.Trim()" style="width:100px;height:auto"></a>
+                                </td>
+                                <td class="cart_description">
+                                    <h4><a href="/Product?id=@temp.product_id">@temp.product_name.Trim()</a></h4>
+                                </td>
+                                <td class="cart_price">
+                                    <p>PKR @temp.product_price.Trim()</p>
+                                </td>
+                                <td class="cart_delete">
+                                    <form action="/Account/DeleteCart" method="post">
+                                        <input type="text" value="@temp.product_id.ToString()" name="pro_id" hidden />
+                                        <button id="deleteButton" type="submit" class="btn btn-default" href=""><i class="fa fa-times"></i></button>
+                                    </form>
+
+                                </td>
+                            </tr>
+                        }
+                    }
+                    
+
+                </tbody>
+            </table>
+            @{
+                int p = Model.Count();
+                if (p > 0)
+                {
+                    <form action="/Account/Checkout" method="post" class="pull-right">
+                        <ul class="list-inline">
+                            <li >
+                                <h4><strong>TOTAL</strong> = RS @(total)/-</h4>
+                            </li>
+                            <li >
+                                <button onclick="submit" type="submit" class="btn btn-default">CheckOut</button>
+                            </li>
+                        </ul>
+                        
+                    </form>
+                }
+            }
+            
+        </div>
+    </div>
+</section> <!--/#wish_items-->
+<script>
+    
+    @*function checkCart(x) {
+        var temp =x;
+   
+        @{
+            
+            string plist = "";
+            List<product> l = Model.ToList();
+            if(l.Count>0)
+            {
+                plist = "";
+                plist = plist + Model.First().product_id;
+                foreach (var t in Model)
+                {
+                    plist = ";" + t.product_id;
+                }
+            }
+            
+        }
+
+        $.post("/Account/Checkout", { list: @plist },
+            function (data) {
+                alert(data);
+                @Session["cart"]=null;
+                $("#tab").empty();
+                $("#tab_total").empty();;
+            });
+    }*@
+</script>
+

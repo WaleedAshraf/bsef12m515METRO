@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_Admin_Header.cshtml";
+    Session["Page"] = "AdminUsers";
+    
+}
+@model IEnumerable<METRO.Models.customer>
+
+<body>
+    <div class="ch-container">
+        <div class="row">
+
+            <div id="content" class="col-lg-10 col-sm-10">
+                <!-- content starts -->
+                <div>
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="/Admin/Dashboard">Home</a>
+                        </li>
+                        <li>
+                            <a href="/Admin/Users">Users</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <div class="box col-md-12">
+                        <div class="box-inner">
+                            <ul class="nav nav-stacked">
+                                <li colspan="2">
+                                    <input id="searchText" type="text" placeholder="Search" class="form-control" />                                
+                                    <button id="searchButton" class="glyphicon glyphicon-search btn btn-default btn-block" value="Search">Search</button>
+                                </li>
+
+                            </ul>
+                            <div class="box-header well" data-original-title="">
+                                <h2><i class="glyphicon glyphicon-user"></i> Users</h2>
+
+                            </div>
+                            <div class="box-content">
+                                <table class="table table-striped table-bordered bootstrap-datatable datatable responsive">
+                                    <thead>
+                                        <tr>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>City</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var c in Model)
+                                        {
+                                            <tr>
+                                                <td>@c.customer_firstname</td>
+                                                <td>@c.customer_lastname</td>
+                                                <td>@c.customer_city</td>
+                                                <td class="center">
+                                                    <a class="btn btn-success" href="~/Admin/UserView?id=@c.customer_id" id="@c.customer_id">
+                                                        <i class="glyphicon glyphicon-zoom-in icon-white"></i>
+                                                        View
+                                                    </a>
+                                                    <a class="btn btn-info" href="~/Admin/UserUpdate?id=@c.customer_id">
+                                                        <i class="glyphicon glyphicon-edit icon-white"></i>
+                                                        Edit
+                                                    </a>
+                                                    <a class="btn btn-danger" id="DeleteButton" href="~/Admin/UserDelete?id=@c.customer_id">
+                                                        <i class="glyphicon glyphicon-trash icon-white"></i>
+                                                        Delete
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div><!--/row-->
+
+
+                <!-- content ends -->
+            </div><!--/#content.col-md-0-->
+        </div><!--/fluid-row-->
+
+    </div><!--/.fluid-container-->
+</body>
+<script>
+    $(document).ready(function () {
+        $("#DeleteButton").on("click", function () {
+            alert('User has been deleted!');
+        });
+
+    });
+
+    document.getElementById("searchButton").onclick = function () {
+        useCheck()
+    }
+    function useCheck() {      
+        var text = $("#searchText").val();
+        
+        $.post("/Admin/SearchUser", { name: text },
+           function (data) {
+               window.location.assign(data);
+           });
+    }
+</script>

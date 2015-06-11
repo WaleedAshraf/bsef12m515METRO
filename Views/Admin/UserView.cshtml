@@ -1,0 +1,57 @@
+﻿@model METRO.Models.customer
+
+@{
+    ViewBag.Title = "UserView";
+    Layout = "~/Views/Shared/_Admin_Header.cshtml";
+    Session["Page"] = "AdminUsers";
+}
+
+
+<body>
+    <div class="ch-container">
+        <div class="row">
+
+            <div id="content" class="col-lg-10 col-sm-10">
+                <!-- content starts -->
+                <div>
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="/Admin/Dashboard">Home</a>
+                        </li>
+                        <li>
+                            <a href="/Admin/Users">Users</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <div class="box col-md-6">
+                        <div class="box-inner" style="border:thin;padding:10px">                                                       
+                            @Html.Label("First Name"); 
+                            @Html.TextBoxFor(x => Model.customer_firstname, new { @class = "form-control" })
+                            @Html.Label("Last Name");
+                            @Html.TextBoxFor(x => Model.customer_lastname, new { @class = "form-control" })                           
+                            @Html.Label("Gender");
+                            @Html.TextBoxFor(x => Model.customer_gender, new { @class = "form-control" })                            
+                            @Html.Label("Email");
+                            @Html.TextBoxFor(x => Model.customer_email, new { @class = "form-control" })                           
+                            @Html.Label("Address");
+                            <textarea type="text" class="form-control" contenteditable="false" disabled>@Model.customer_address</textarea>
+                            @Html.Label("City");
+                            @Html.TextBoxFor(x => Model.customer_city, new { @class = "form-control" })                          
+                            @Html.Label("Telephone");
+                            @Html.TextBoxFor(x => Model.customer_telephone, new { @class = "form-control" })                           
+                            @Html.Label("Mobile");
+                            @Html.TextBoxFor(x => Model.customer_mobile, new { @class = "form-control" })                            
+                            <br />
+                            <a href="~/Admin/UserUpdate?id=@Model.customer_id" class="btn btn-success">Update Details</a>
+                            <br /><br /> 
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div><!--/row-->
+                <!-- content ends -->
+            </div><!--/#content.col-md-0-->
+        </div><!--/fluid-row-->
+
+    </div><!--/.fluid-container-->
+</body>

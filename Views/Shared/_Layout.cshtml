@@ -1,0 +1,270 @@
+﻿@{
+   
+   
+    
+
+    METRO.Models.MyDataEntities de = new METRO.Models.MyDataEntities();
+    string date = System.DateTime.Now.ToShortDateString();
+    int hour = System.DateTime.Now.Hour;
+    METRO.Models.hit h = de.hits.Where(x => x.count_time == hour).First();
+    if(h.count_date==date)
+    {
+        h.count_no++;
+    }
+    else
+    {
+        h.count_date = date;
+        h.count_no = 1;
+    }
+    
+    //de.Entry(h).State = System.Data.EntityState.Modified;
+    //de.SaveChanges();
+    
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>MTERO</title>
+
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/css/prettyPhoto.css" rel="stylesheet">
+    <link href="~/Content/css/price-range.css" rel="stylesheet">
+    <link href="~/Content/css/animate.css" rel="stylesheet">
+    <link href="~/Content/css/main.css" rel="stylesheet">
+    <link href="~/Content/css/responsive.css" rel="stylesheet">
+    <link href="~/Content/css/dropdowns-enhancement.css" rel="stylesheet">
+   
+
+
+
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.scrollUp.min.js"></script>
+    <script src="~/Scripts/price-range.js"></script>
+    <script src="~/Scripts/jquery.prettyPhoto.js"></script>
+    <script src="~/Scripts/main.js"></script>
+    <script src="~/Scripts/dropdowns-enhancement.js"></script>
+
+
+
+
+
+
+
+    <!-- The fav icon -->
+    <link rel="shortcut icon" href="~/Content/images/favicon.ico">
+
+    <script>
+        document.getElementById("logout").onclick = function () {
+            logOut()
+        }
+
+        function logOut() {
+            @Session.["USER"]=null;
+            window.location.assign("/Home/Index");
+        }
+    </script>
+    <style>
+        
+    body {      
+        background-image:url('@Url.Content("~/Content/images/Home/light_wool.png")');
+    }
+    </style>
+
+
+</head><!--/head-->
+
+
+<body>
+    
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".fancybox").fancybox();
+        });
+    </script>
+
+    <header id="header">
+        <!--header-->
+        <div class="header_top">
+            <!--header_top-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="contactinfo">
+                            <ul class="nav nav-pills">
+                                <li><a href="#"><i class="fa fa-phone"></i> +92-322-9344725</a></li>
+                                <li><a href="#"><i class="fa fa-envelope"></i> info@metro.com</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="social-icons pull-right">
+                            <ul class="nav navbar-nav">
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--/header_top-->
+
+        <div class="header-middle">
+            <!--header-middle-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="logo pull-left">
+                            <a href="/Home"><img src="~/Content/images/Home/download.jpg" /></a>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="shop-menu pull-right">
+                            <ul class="nav navbar-nav">
+                                @{if (Session["USER"] != null)
+                                {
+                                    <li><a href="/Account/Logout"><i id="logout" class="fa fa-lock"></i>Logout</a></li>
+                                    <li><a href="/Account/Index?id=@(Session["USERID"])" @{if (Session["Page"] == "Account") { <text> class="active" </text>  }}><i class="fa fa-user"></i> Account</a></li>
+                                    <li><a href="/Account/WishList" @{if (Session["Page"] == "WishList") { <text> class="active" </text>  }}><i class="fa fa-star"></i>My Wishlist</a></li>
+                                    <li><a href="/Account/Cart" @{if (Session["Page"] == "Cart") { <text> class="active" </text>   }}><i class="glyphicon glyphicon-shopping-cart"></i>My Cart</a></li>
+                                }
+                                 }
+
+                                @{if (Session["USER"] == null)
+                                {
+                                    <li><a href="/Login" @{if (Session["Page"] == "Login") { <text> class="active" </text> }}><i class="fa fa-lock"></i> Login</a></li>
+                                }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--/header-middle-->
+
+        <div class="header-bottom">
+            <!--header-bottom-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <div class="mainmenu pull-left">
+                            <ul class="nav navbar-nav collapse navbar-collapse">
+                                <li><a href="/Home" @{if (Session["Page"] == "Home") { <text> class="active" </text>    }}>Home</a></li>
+                                <li><a href="/Services" @{if (Session["Page"] == "Services") { <text> class="active" </text>    }}>Services</a></li>
+                                <li><a href="/AllProducts" @{if (Session["Page"] == "AllProducts") { <text> class="active" </text>    }}>Products</a></li>
+                                <li><a href="/ContactUs" @{if (Session["Page"] == "ContactUs") { <text> class="active" </text>    }}>Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div><!--/header-bottom-->
+    </header><!--/header-->
+    @RenderBody()
+
+
+    <footer id="footer">
+        <!--Footer-->
+
+
+        <div class="footer-widget">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="single-widget">
+                            <h2>Service</h2>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#">Online Help</a></li>
+                                <li @{if (Session["Page"] == "ContactUs") { <text> class="active" </text>      }}><a href="/ContactUs">Contact Us</a></li>
+                                <li @{if (Session["Page"] == "FAQ") { <text> class="active" </text>     }}> <a href="/FAQ">FAQ’s</a></li>
+                                <li @{if (Session["Page"] == "ForYourFamily") { <text> class="active" </text>     }}> <a href="/ForYourFamily">For Your Family</a></li>
+                                <li @{if (Session["Page"] == "IndustriesAndOffices") { <text> class="active" </text>      }}> <a href="/IndustriesAndOffices">Industries & Offices</a></li>
+
+                            </ul>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="single-widget">
+                            <h2>Policies</h2>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#">Terms of Use</a></li>
+                                <li><a href="#">Privecy Policy</a></li>
+                                <li><a href="#">Refund Policy</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="single-widget">
+                            <h2>
+                                About METRO
+                            </h2>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li @{if (Session["Page"] == "AboutUs") { <text> class="active" </text>     }}><a href="/AboutUs">About Us </a></li>
+                                <li><a href="#">Careers</a></li>
+                                <li><a href="#">Store Location</a></li>
+                                <li><a href="#">Affillate Program</a></li>
+                                <li><a href="#">Copyright</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-sm-offset-1">
+                        <div class="single-widget">
+                            <h2>Get Updates About METRO</h2>
+                            <form action="#" class="searchform">
+                                <input type="text" placeholder="Your email address" />
+                                <button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
+                                <p>Get the most recent updates from <br />our site and be updated your self...</p>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <p class="pull-left">Copyright © 2013 METRO Inc. All rights reserved.</p>
+                    <p class="pull-right">Designed by <span><a target="_blank" href="#">Waleed Ashraf</a></span></p>
+                </div>
+            </div>
+        </div>
+
+    </footer><!--/Footer-->
+
+
+
+    <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647;"><i class="fa fa-angle-up"></i></a>
+</body>
+</html>
+<script>
+    document.getElementById("logout").onclick = function () {
+        logOut()
+    }
+
+    function logOut() {
+        @Session.["USER"]=null;
+        window.location.assign("/Home");
+    }
+</script>

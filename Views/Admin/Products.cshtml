@@ -1,0 +1,128 @@
+﻿@{
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_Admin_Header.cshtml";
+    Session["Page"] = "AdminProducts";
+}
+@using METRO.Models;
+
+@model IEnumerable<METRO.Models.product>
+
+@{
+    List<catagory> cat = ViewBag.Cat;
+}
+<head>
+    <title>METRO ADMIN</title>
+    <link href="~/Content/css/dropdowns-enhancement.css" rel="stylesheet">
+    <link href="~/Content/css/dropdowns-enhancement.min.css" rel="stylesheet">
+
+    <script src="~/Scripts/dropdowns-enhancement.js"></script>
+</head>
+<body>
+    <div class="ch-container">
+        <div class="row">
+         
+            <div id="content" class="col-lg-10 col-sm-10">
+                <!-- content starts -->
+                <div>
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="/Admin/Dashboard">Home</a>
+                        </li>
+                        <li>
+                            <a href="/Admin/Products">Products</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <div class="box col-md-12">
+                        <div class="box-inner">
+                            <ul class="nav nav-stacked">
+                                <li colspan="2">
+                                    <input id="searchText" type="text" placeholder="Search" class="form-control" />
+                                </li>
+                                <li>
+                                    <button id="searchType" data-toggle="dropdown" class="btn btn-default dropdown-toggle btn-block"> Type <span class="caret"></span></button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <input type="radio" id="all" name="1" value="1" checked="">
+                                            <label for="all">All</label>
+                                        </li>
+                                        @foreach (var drop in cat)
+                                        {
+                                            <li>
+                                                <input type="radio" id="@drop.catagories_id" name="1" value="1" checked="">
+                                                <label for="@drop.catagories_id">@drop.catagories_tag</label>
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
+                                <li>
+                                    <button id="searchButton" class="glyphicon glyphicon-search btn btn-default btn-block" value="Search">Search</button>
+                                </li>
+
+                            </ul>
+
+                            <div class="box-header well" data-original-title="">
+                                <h2><i class="glyphicon glyphicon-user"></i>Products</h2>
+                            </div>
+                            <div class="box-content">
+                                <table class="table table-striped table-bordered bootstrap-datatable datatable responsive">
+                                    <thead>
+                                        <tr>
+                                            <th>Produt Name</th>
+                                            <th>Date Added</th>
+                                            <th>Price</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var x in Model)
+                                        {
+                                            <tr>
+                                                <td>@x.product_name</td>
+                                                <td class="center">@x.product_date_added</td>
+                                                <td class="center">@x.product_price</td>
+                                                <td class="center">
+                                                    <a class="btn btn-success" href="/Product/Index?id=@x.product_id.ToString().Trim()">
+                                                        <i class="glyphicon glyphicon-zoom-in icon-white"></i>
+                                                        View
+                                                    </a>
+                                                    <a class="btn btn-info" href="/Admin/EditPro?id=@x.product_id.ToString().Trim()">
+                                                        <i class="glyphicon glyphicon-edit icon-white"></i>
+                                                        Edit
+                                                    </a>
+                                                    <a class="btn btn-danger" href="/Admin/DeletePro?id=@x.product_id.ToString().Trim()">
+                                                        <i class="glyphicon glyphicon-trash icon-white"></i>
+                                                        Delete
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div><!--/row-->
+                <!-- content ends -->
+            </div><!--/#content.col-md-0-->
+        </div><!--/fluid-row-->
+
+    </div><!--/.fluid-container-->
+</body>
+<script>
+    document.getElementById("searchButton").onclick = function () {
+        proCheck()
+    }
+    function proCheck() {
+        var type = $("#searchType").text();
+        var text = $("#searchText").val();
+        var status = $("#return");
+
+        $.post("/Admin/Search", { type: type, id: text },
+           function (data) {
+               window.location.assign(data);
+           });
+    }
+</script>

@@ -1,0 +1,147 @@
+﻿@model METRO.Models.customer
+
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Session["Page"] = "AccountUpdate";
+}
+
+@{
+    if (Session["USER"] != null)
+    {
+
+    }
+    else
+    {
+        <script>
+            window.location.assign("/Home/Index");
+        </script>
+    }
+}
+
+
+
+<div class="container">
+    <section style="padding-bottom: 50px; padding-top: 50px;">
+        <div class="row">
+
+            <div class="col-md-8">
+
+                <form class="form-group col-md-8" action="/Account/UpdateUser" method="post">
+                    <input type="text" name="customer_id" hidden value="@Model.customer_id" />
+                    <label>First Name</label>
+                    <input name="customer_firstname" type="text" class="form-control" value="@Model.customer_firstname" required />
+                    <label>Last Name</label>
+                    <input name="customer_lastname" type="text" class="form-control" value="@Model.customer_lastname " required />
+                    <label>Gender</label>
+                    <input name="customer_gender" type="text" class="form-control" value="@Model.customer_gender" required>
+                    <label>Email</label>
+                    <input name="customer_email" type="email" class="form-control" value="@Model.customer_email" required>
+                    <label>Address</label>
+                    <textarea name="customer_address" class="form-control" value="@Model.customer_address" required>@Model.customer_address</textarea>
+                    <label>City</label>
+                    <input name="customer_city" type="text" class="form-control" value="@Model.customer_city" required />
+                    <label>Telephone</label>
+                    <input name="customer_telephone" type="number" class="form-control" value="@Model.customer_telephone" required />
+                    <label>Mobile</label>
+                    <input name="customer_mobile" type="number" class="form-control" value="@Model.customer_mobile" required />
+                    <input type="text" name="customer_password" hidden value="" />
+                    <br />
+                    <input type="submit" name="SubmitButton" id="SubmitButton" class="btn btn-success" value="Update Details" />
+                    <br /><br />
+                </form>
+                <div class="form-group col-md-8">
+                    <h3>Change Your Password</h3>
+                    <br />
+                    <label>Enter Old Password</label>
+                    <input type="password" class="form-control" name="pass1" id="pass1" required>
+                    <label>Enter New Password</label>
+                    <input type="password" class="form-control" name="pass2" id="pass2" required>
+                    <label>Confirm New Password</label>
+                    <input type="password" class="form-control" name="pass3" id="pass3" required />
+                    <br>
+                    <button id="passSub" type="submit" class="btn btn-default">Change Password</button>
+                    <label id="notif" style="color:orangered; font-family:'Times New Roman', Times, serif"></label>
+                </div>
+
+            </div>
+        </div>
+        <!-- ROW END -->
+
+
+    </section>
+    <!-- SECTION END -->
+</div>
+<!-- CONATINER END -->
+<script>
+    $(document).ready(function () {
+        $("#SubmitButton").on("click", function () {
+            alert('Changes have been saved!');
+        });
+
+        document.getElementById("passSub").onclick = function () {
+            check()
+        };
+
+    });
+
+    document.getElementById("passSub").onclick = function () {
+        check()
+    };
+
+    document.getElementById("pass1").onclick = function () {
+        var message = $("#notif");
+        message.text(" ");
+    };
+
+    document.getElementById("pass2").onclick = function () {
+        var message = $("#notif");
+        message.text(" ");
+    };
+
+    document.getElementById("pass3").onclick = function () {
+        var message = $("#notif");
+        message.text(" ");
+    };
+
+    function check() {
+        var pass1 = $("#pass1").val().toString();
+        var pass2 = $("#pass2").val().toString();
+        var pass3 = $("#pass3").val().toString();
+        var message = $("#notif");
+        var alt =  document.getElementById("notif");
+        var user = @Session["USERID"];
+
+        if (pass2 != pass3) {   
+            alt.setAttribute("style","color:red");
+            message.text("New Passwords Do Not Match!"); 
+           
+        }
+        else if (pass1 == pass2 || pass1 == pass3) { 
+            alt.setAttribute("style","color:red");
+            message.text("Type a new Password!");           
+        }
+        else
+        {
+            $.post("/Account/ChangePassword", { pass1:pass1,pass2: pass2 , user : user },
+            function (data) {
+                if (data == "true") {
+                    message.text("Password Changed");
+                    alt.setAttribute("style","color:green");
+                    //var pasnew1 = $("#pass1");
+                    //var pasnew2 = $("#pass2");
+                    //var pasnew3 = $("#pass3");
+                    //pasnew1.val("");
+                    //pasnew2.val("");
+                    //pasnew3.val("");                   
+                }
+                else {
+                    alt.setAttribute("style","color:red");
+                    message.text("Password not Changed! Maybe Old password not correct!");
+                }
+            });
+        }
+            
+    }
+
+</script>

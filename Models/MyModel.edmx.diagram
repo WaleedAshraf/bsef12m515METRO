@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3695ede73fde46b6beed82fd96dea336" Name="Diagram1" ZoomLevel="66">
+        <EntityTypeShape EntityType="MyDataModel.catagory" Width="2" PointX="1.25" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyDataModel.customer" Width="1.875" PointX="9.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyDataModel.product" Width="2" PointX="4" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyDataModel.products_to_catagories" Width="1.875" PointX="1.375" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyDataModel.review" Width="1.75" PointX="6.875" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyDataModel.wishlist" Width="1.875" PointX="6.875" PointY="4.375" IsExpanded="true" />
+        <AssociationConnector Association="MyDataModel.FK_products_to_catagories_ToTable_catagories" ManuallyRouted="false" />
+        <AssociationConnector Association="MyDataModel.FK_reviews_ToTable_customers" ManuallyRouted="false" />
+        <AssociationConnector Association="MyDataModel.FK_wishlist_ToTable_customers" ManuallyRouted="false" />
+        <AssociationConnector Association="MyDataModel.FK_products_to_catagories_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="MyDataModel.FK_reviews_ToTable_products" ManuallyRouted="false" />
+        <AssociationConnector Association="MyDataModel.FK_wishlist_ToTable_products" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MyDataModel.like" Width="1.875" PointX="6.875" PointY="6.75" />
+        <AssociationConnector Association="MyDataModel.FK_likes_ToTable_customers" />
+        <AssociationConnector Association="MyDataModel.FK_likes_ToTable_products" />
+        <EntityTypeShape EntityType="MyDataModel.hit" Width="1.75" PointX="12" PointY="2.125" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,362 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Session["Page"] = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using METRO.Models;
+@model IEnumerable<METRO.Models.catagory>
+@{
+    List<product> x = ViewBag.Pro;
+    List<product> y = ViewBag.Like;
+}
+
+<head>
+    <title>METRO</title>
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet">   
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+
+
+<body>
+   
+        <!--slider-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="slider-carousel" class="carousel slide" data-ride="carousel" style="margin-bottom:15px">
+                        <ol class="carousel-indicators">
+                            <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#slider-carousel" data-slide-to="1"></li>
+                            <li data-target="#slider-carousel" data-slide-to="2"></li>
+                        </ol>
+
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <div class="col-sm-6">
+                                    <h1><span>M</span>etro</h1>
+                                    <h2>Cash and Carry </h2>
+                                    <a href="/Product/Index?id=@x.ElementAt(0).product_id" class="btn btn-default get">Check it now</a>
+                                </div>
+                                <div class="col-sm-6">
+                                    <img style="height:200px;width:auto" src="~/Content/images/Product/@x.ElementAt(0).product_image" class="productItem img-responsive" alt="" />
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="col-sm-6">
+                                    <h1><span>M</span>etro</h1>
+                                    <h2>Cash and Carry </h2>
+                                    <a href="/Product/Index?id=@x.ElementAt(1).product_id" class="btn btn-default get">Check it Now</a>
+                                </div>
+                                <div class="col-sm-6">
+                                    <img style="height:200px;width:auto" src="~/Content/images/Product/@x.ElementAt(1).product_image" class="productItem img-responsive" alt="" />
+                                </div>
+                            </div>
+                            <div class="item">
+
+                                <div class="col-sm-6">
+                                    <h1><span>M</span>etro</h1>
+                                    <h2>Cash and Carry </h2>
+                                    <a href="/Product/Index?id=@x.ElementAt(2).product_id" class="btn btn-default get">Check it now</a>
+                                </div>
+                                <div class="col-sm-6">
+                                    <img style="height:200px;width:auto" src="~/Content/images/Product/@x.ElementAt(2).product_image" class="productItem img-responsive" alt="" />
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                        <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section><!--/slider-->
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="left-sidebar">
+                        <div class="brands_products">
+                            <!--search_products-->
+                            <h2>Search</h2>
+                            <div class="brands-name" style="margin-bottom:20px">
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li>
+                                        <button id="searchType" data-toggle="dropdown" class="btn btn-default dropdown-toggle btn-block"> Type <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <input type="radio" id="all" name="1" value="1" checked="">
+                                                <label for="all">All</label>
+                                            </li>
+                                            @foreach (var drop in Model)
+                                            {
+                                                <li>
+                                                    <input type="radio" id="@drop.catagories_id" name="1" value="1" checked="">
+                                                    <label for="@drop.catagories_id">@drop.catagories_tag</label>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </li>
+                                    <li><input id="searchText" type="text" placeholder="Search" class="form-control" /></li>
+                                    <li><label id="min_text" class="form-control"></label></li>
+                                    <li><input id="min_val" type="range" value="0" min="0" max="100000" step="100" placeholder="Min Price" class="form-control" style="background-color:lightskyblue;height:4px; margin-top:10px; margin-bottom:10px;" /></li>
+                                    <li><label id="max_text" class="form-control"></label></li>
+                                    <li><input id="max_val" type="range" min="0" max="100000" step="100" placeholder="Max Price" class="form-control" style="background-color:lightskyblue;height:4px; margin-top:10px; margin-bottom:10px;" /></li>
+                                    <li><button id="searchButton" class="glyphicon glyphicon-search btn btn-default btn-block" value="Search">Search</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <h2>Category</h2>
+                        <div class="panel-group category-products" id="accordian">
+                            <!--category-productsr-->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordian" href="#Food">
+                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                            Food
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="Food" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul>
+                                            @foreach (var c in Model)
+                                            {
+                                                if (c.catagories_id.Contains("F"))
+                                                {
+                                                    <li><a href="/AllProducts/Index?type=@(c.catagories_id.Trim())&id=">@c.catagories_name</a></li>
+                                                }
+                                            }
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordian" href="#Electric">
+                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                            Electric
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="Electric" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul>
+                                            @foreach (var c in Model)
+                                            {
+                                                if (c.catagories_id.Contains("T"))
+                                                {
+                                                    <li><a href="/AllProducts/Index?type=@(c.catagories_id.Trim())&id=">@c.catagories_name</a></li>
+                                                }
+                                            }
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            @foreach (var c in Model)
+                            {
+                                if (c.catagories_id.Contains("N"))
+                                {
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title"><a href="/AllProducts/Index?type=@(c.catagories_id.Trim())&id=">@c.catagories_name</a></h4>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            @foreach (var c in Model)
+                            {
+                                if (c.catagories_id.Contains("G"))
+                                {
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title"><a href="/AllProducts/Index?type=@(c.catagories_id.Trim())&id=">@c.catagories_name</a></h4>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div><!--/category-products-->
+
+                       
+                    </div>
+                </div>
+
+                <div class="col-sm-9 padding-right">
+                    <div class="features_items" id="searchResult">
+                        <!--features_items-->
+                        <h2 class="title text-center">Top Sellers</h2>
+                        @foreach (var pro in x)
+                        {
+                            <div class="col-sm-4">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img src="~/Content/images/Product/@pro.product_image" style="height:180px;width:auto" alt="" />
+                                            <h2>PKR @pro.product_price</h2>
+                                            <p>@pro.product_name</p>
+                                            <a href="/Product/Index?id=@pro.product_id" class="btn btn-default add-to-cart">View</a>
+                                        </div>
+                                    </div>
+                                    @{
+                            if (Session["USER"] != null)
+                            {
+                                <div class="choose">
+                                    <ul class="nav nav-pills nav-justified">
+                                        <li><a id="addToWish" onclick="WishList(@pro.product_id)" href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+                                        <li><a id="addToCart" onclick="Cart(@pro.product_id)" href="#"><i class="glyphicon glyphicon-shopping-cart"></i>Add to Cart</a></li>
+                                    </ul>
+                                </div>
+                            }
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div><!--features_items-->
+
+                    <!--top liked-->
+                    <div class="features_items" >
+                        
+                        <h2 class="title text-center">Most Liked</h2>
+                        @foreach (var pro in y)
+                        {
+                            <div class="col-sm-4">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img src="~/Content/images/Product/@pro.product_image" style="height:180px;width:auto" alt="" />
+                                            <h2>PKR @pro.product_price</h2>
+                                            <p>@pro.product_name</p>
+                                            <a href="/Product/Index?id=@pro.product_id" class="btn btn-default add-to-cart">View</a>
+                                        </div>
+                                    </div>
+                                    @{
+                            if (Session["USER"] != null)
+                            {
+                                <div class="choose">
+                                    <ul class="nav nav-pills nav-justified">
+                                        <li><a id="addToWish" onclick="WishList(@pro.product_id)" href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+                                        <li><a id="addToCart" onclick="Cart(@pro.product_id)" href="#"><i class="glyphicon glyphicon-shopping-cart"></i>Add to Cart</a></li>
+                                    </ul>
+                                </div>
+                            }
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div><!--top liked-->
+                </div>
+            </div>
+        </div>
+    </section>
+    
+</body>
+
+
+<script>
+
+    $(function () {
+        var availableTags = [
+          "ActionScript",
+          "AppleScript",
+          "Asp",
+          "BASIC",
+          "C",
+          "C++",
+          "Clojure",
+          "COBOL",
+          "ColdFusion",
+          "Erlang",
+          "Fortran",
+          "Groovy",
+          "Haskell",
+          "Java",
+          "JavaScript",
+          "Lisp",
+          "Perl",
+          "PHP",
+          "Python",
+          "Ruby",
+          "Scala",
+          "Scheme"
+        ];
+        $("#searchText").autocomplete({
+            source: availableTags
+        });
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+    document.getElementById("searchButton").onclick = function () {
+        proCheck()
+    }
+    function proCheck() {
+        var type = $("#searchType").text();
+        var text = $("#searchText").val();
+        var min = $("#min_val").val();
+        var max = $("#max_val").val();
+
+        $.post("/Home/Search", { type: type, id: text ,min:min,max:max },
+            function (data) {
+                $("#searchResult").empty().append(data);
+            });
+    }
+
+    function WishList(a) {
+
+        var pro_id = a;
+        var user_id = @(Session["USERID"])
+
+        $.post("/Product/AddWish", { pro_id: pro_id, user_id: user_id },
+            function (data) {
+                alert(data)
+            });
+    }
+    function Cart(a) {
+
+        var pro_id = a;
+        var user_id = @(Session["USERID"])
+
+        $.post("/Product/AddCart", { pro_id: pro_id, user_id: user_id },
+            function (data) {
+                alert(data)
+            });
+    }
+    document.getElementById("min_val").onchange = function () {
+        $("#min_text").text("Min : " + $("#min_val").val());
+    }
+    $("#min_text").text("Min : " + $("#min_val").val());
+
+    document.getElementById("max_val").onchange = function () {
+        $("#max_text").text("Max : " + $("#max_val").val());
+        var y = $("#max_val").val().toString();
+        var x = document.getElementById("min_val");
+        x.setAttribute("max",y);
+    }
+    $("#max_text").text("Max : " + $("#max_val").val());
+    var y = $("#max_val").val().toString();
+    var x = document.getElementById("min_val");
+    x.setAttribute("max", y);
+
+
+</script>
