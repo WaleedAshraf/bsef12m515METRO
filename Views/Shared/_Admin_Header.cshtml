@@ -75,12 +75,7 @@
     <div class="navbar navbar-default" role="navigation">
 
         <div class="navbar-inner">
-            <button type="button" class="navbar-toggle pull-left animated flip">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+            
             <a class="navbar-brand" href="/Admin/Dashboard">
                 <img alt="METRO" src="~/Content/img/logo.jpg" class="hidden-xs" />
                 <span>METRO</span>
@@ -118,47 +113,34 @@
 
             <!-- left menu starts -->
             <div class="col-sm-2 col-lg-2">
-                <div class="sidebar-nav">
-                    <div class="nav-canvas">
-                        <div class="nav-sm nav nav-stacked">
 
-                        </div>
-                        <ul class="nav nav-pills nav-stacked main-menu">
-                            <li class="nav-header">Main</li>
-                            <li @{if (Session["Page"] == "Dashboard") { <text> class="active" </text>         }}>
-                                <a class="ajax-link" href="/Admin/Dashboard"><i class="glyphicon glyphicon-dashboard"></i><span> Dashboard</span></a>
-                            </li>
-                            <li @{if (Session["Page"] == "AdminProducts") { <text> class="active" </text>          }}>
-                                <a class="ajax-link" href="/Admin/Products"><i class="glyphicon glyphicon-list-alt"></i><span> Products</span></a>
-                            </li>
-                            <li @{if (Session["Page"] == "AdminUsers") { <text> class="active" </text>           }}>
-                                <a class="ajax-link" href="/Admin/Users"><i class="glyphicon glyphicon-list-alt"></i><span> Users</span></a>
-                            </li>
-                            <li @{if (Session["Page"] == "AddProduct") { <text> class="active" </text>            }}>
-                                <a class="ajax-link" href="/Admin/AddProduct"><i class="glyphicon glyphicon-list"></i><span> Add Product</span></a>
-                            </li>
-                            <li @{if (Session["Page"] == "AllCatagories") { <text> class="active" </text>             }}>
-                                <a class="ajax-link" href="/Admin/ViewCatagories"><i class="glyphicon glyphicon-list"></i><span>Catagories</span></a>
-                            </li>
 
-                        </ul>
-                       
-                    </div>
-                </div>
+
+                <ul class="nav nav-pills nav-stacked main-menu">
+                    <li class="nav-header">Main</li>
+                    <li @{if (Session["Page"] == "Dashboard") { <text> class="active" </text>            }}>
+                        <a class="ajax-link" href="/Admin/Dashboard"><i class="glyphicon glyphicon-dashboard"></i><span> Dashboard</span></a>
+                    </li>
+                    <li @{if (Session["Page"] == "AdminProducts") { <text> class="active" </text>             }}>
+                        <a class="ajax-link" href="/Admin/Products"><i class="glyphicon glyphicon-list-alt"></i><span> Products</span></a>
+                    </li>
+                    <li @{if (Session["Page"] == "AdminUsers") { <text> class="active" </text>              }}>
+                        <a class="ajax-link" href="/Admin/Users"><i class="glyphicon glyphicon-list-alt"></i><span> Users</span></a>
+                    </li>
+                    <li @{if (Session["Page"] == "AddProduct") { <text> class="active" </text>               }}>
+                        <a class="ajax-link" href="/Admin/AddProduct"><i class="glyphicon glyphicon-list"></i><span> Add Product</span></a>
+                    </li>
+                    <li @{if (Session["Page"] == "AllCatagories") { <text> class="active" </text>                }}>
+                        <a class="ajax-link" href="/Admin/ViewCatagories"><i class="glyphicon glyphicon-list"></i><span>Catagories</span></a>
+                    </li>
+
+                </ul>
             </div>
+
             <!--/span-->
             <!-- left menu ends -->
 
-            <noscript>
-                <div class="alert alert-block col-md-12">
-                    <h4 class="alert-heading">Warning!</h4>
-
-                    <p>
-                        You need to have <a href="http://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a>
-                        enabled to use this site.
-                    </p>
-                </div>
-            </noscript>
+            
 
 
 
