@@ -94,14 +94,7 @@
                 </ul>
             </div>
             <!-- user dropdown ends -->
-
-
-
-            <ul class="collapse navbar-collapse nav navbar-nav top-menu">
-                <li><a href="/Home"><i class="glyphicon glyphicon-globe"></i> Visit Site</a></li>
-
-            </ul>
-
+            <a href="/Home" class="navbar-brand"><i class="glyphicon glyphicon-globe"></i> Visit Site</a>
         </div>
     </div>
     <!-- topbar ends -->
@@ -117,7 +110,7 @@
 
 
                 <ul class="nav nav-pills nav-stacked main-menu">
-                    <li class="nav-header">Main</li>
+                   
                     <li @{if (Session["Page"] == "Dashboard") { <text> class="active" </text>            }}>
                         <a class="ajax-link" href="/Admin/Dashboard"><i class="glyphicon glyphicon-dashboard"></i><span> Dashboard</span></a>
                     </li>
