@@ -2,7 +2,7 @@
     ViewBag.Title = "Users";
     Layout = "~/Views/Shared/_Admin_Header.cshtml";
     Session["Page"] = "AdminUsers";
-    
+
 }
 @model IEnumerable<METRO.Models.customer>
 
@@ -27,7 +27,7 @@
                         <div class="box-inner">
                             <ul class="nav nav-stacked">
                                 <li colspan="2">
-                                    <input id="searchText" type="text" placeholder="Search" class="form-control" />                                
+                                    <input id="searchText" type="text" placeholder="Search" class="form-control" />
                                     <button id="searchButton" class="glyphicon glyphicon-search btn btn-default btn-block" value="Search">Search</button>
                                 </li>
 
@@ -77,8 +77,6 @@
                     </div>
                     <!--/span-->
                 </div><!--/row-->
-
-
                 <!-- content ends -->
             </div><!--/#content.col-md-0-->
         </div><!--/fluid-row-->
@@ -86,19 +84,12 @@
     </div><!--/.fluid-container-->
 </body>
 <script>
-    $(document).ready(function () {
-        $("#DeleteButton").on("click", function () {
-            alert('User has been deleted!');
-        });
-
-    });
-
     document.getElementById("searchButton").onclick = function () {
         useCheck()
     }
-    function useCheck() {      
+    function useCheck() {
         var text = $("#searchText").val();
-        
+
         $.post("/Admin/SearchUser", { name: text },
            function (data) {
                window.location.assign(data);
