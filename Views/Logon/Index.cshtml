@@ -1,0 +1,133 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Session["Page"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="form">
+    <!--form-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-1">
+                <div class="login-form">
+                    <!--login form-->
+                    <h2>Login to your account</h2>
+                    
+                    <input type="email" class="form-control" placeholder="Email Address" name="email" id="logEmail" required />
+                    <br />
+                    <input type="password" class="form-control" placeholder="Password" name="password" id="logPass" required />
+                    <br />
+                    <button type="submit" id="logButton" class="btn btn-default">Login</button>
+                    <br />
+                    <label id="lognotif" style="color:orangered; font-family:'Times New Roman', Times, serif"></label>
+                    
+                </div><!--/Logon form-->
+            </div>
+            <div class="col-sm-1">
+                <h2 class="or">OR</h2>
+            </div>
+            <div class="col-sm-5">
+                <div class="signup-form">
+                    <!--sign up form-->
+                    <h2>New User Signup!</h2>
+                    <form action="/Logon/UserSignup" onsubmit="return check()" method="post">
+                        <input type="text" placeholder="First Name" name="customer_firstname" required />
+                        <input type="text" placeholder="Last Name" name="customer_lastname" required />
+                        <input type="email" placeholder="Email Address" name="customer_email" id="customer_email" required />
+
+                        <label >Male <input type="radio" name="customer_gender" value="Male" class="glyphicon"  checked /></label>
+
+                        <label >Female <input type="radio" name="customer_gender" value="Female" class="glyphicon"  /></label>
+                        
+                        
+                        <br />
+
+                        <input type="text" placeholder="Address" name="customer_address" required />
+                        <input type="text" placeholder="City" name="customer_city" required />
+                        <input type="text" placeholder="Telephone" name="customer_telephone" required />
+                        <input type="text" placeholder="Mobile" name="customer_mobile" required />
+                        <input onselect='return emailcheck()' type="password" placeholder="Password" name="customer_password" id="pass1" required />
+                        <input type="password" placeholder="Confirm Passowrd" name="customer_password2" id="pass2" required />
+                        <button type="submit" class="btn btn-default">Signup</button>
+                    </form>
+                    <label id="notif" style="color:orangered; font-family:'Times New Roman', Times, serif" ></label>
+                    <label id="emailnotif" style="font-family:'Times New Roman', Times, serif" ></label>
+                    
+                </div><!--/sign up form-->
+            </div>
+        </div>
+    </div>
+</section><!--/form-->
+<script>  
+    function check() {
+        var pass1 = document.getElementById('pass1');
+        var pass2 = document.getElementById('pass2');
+        var message = document.getElementById('notif');
+        var status = document.getElementById('emailnotif').innerText;
+
+        if (pass1.value != pass2.value) {
+            message.innerHTML = "Passwords Do Not Match!"
+            return false;
+        }
+        else if (status == "Email is not available!")
+        {
+            message.innerHTML = "";
+            return false;
+        }
+           
+        else
+            return true; 
+                
+    }
+    document.getElementById("pass1").onclick = function () {
+        myFunction()
+    };
+    function myFunction() {
+        var name = $("#customer_email").val();
+        var status = $("#emailnotif");
+        status.html("Checking....");
+
+        $.post("/Logon/CheckEmail", { username: name },
+            function (data) {
+                if (data == "true") {
+                    status.text("Email is not available!");                   
+                }
+                else
+                {
+                    status.text("Email is available!");
+                }
+            });
+    }
+    document.getElementById("logButton").onclick = function () {
+        logCheck()
+    }
+
+    function loginCheck() {      
+
+        var status = document.getElementById('lognotif').innerText;
+        if (status == "Wrong Email or Password!") {
+            return false;
+        }
+        else
+            return true;     
+    }
+
+    function logCheck() {
+        var email = $("#logEmail").val();
+        var password = $("#logPass").val();
+        var status = $("#lognotif");
+        status.html("Checking....");
+
+        $.post("/Logon/UserLogin", { email: email, password: password },
+            function (data) {
+                if (data == "false") {
+                    status.text("Wrong Email or Password!");  
+                }
+                else
+                {
+                    window.location.assign("/Logon/UserFound?form=" + email);
+                }
+            });
+    }
+</script>
+ 
