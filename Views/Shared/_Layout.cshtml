@@ -63,12 +63,14 @@
     <link rel="shortcut icon" href="~/Content/images/favicon.ico">
 
     <script>
-        document.getElementById("logout").onclick = function () {
-            logOut()
-        }
+    document.getElementById("logout").onclick = function () {
+        logOut()
+    }
 
-        function logOut() {
-            @Session.["USER"]=null;
+    function logOut() {
+             @Session.["USER"]=null;
+             @Session.["USERID"]=null;
+             @Session.["ADMIN"]=null;
             window.location.assign("/Home/Index");
         }
     </script>

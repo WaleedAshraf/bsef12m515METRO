@@ -2,6 +2,16 @@
     ViewBag.Title = "_Admin_Header";
     
 }
+
+@{
+    if( Session["ADMIN"]==null)
+    {
+        <script>
+            window.location.assign("/Home/Index")
+        </script>
+    }
+}
+}
 <html>
 @Styles.Render("~/Content/css")
 @Scripts.Render("~/bundles/jquery")
