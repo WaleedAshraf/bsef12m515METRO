@@ -132,6 +132,16 @@
         else
             return true;
     }
+    document.getElementById("customer_password").onchange = function () {
+        var message = document.getElementById('notif');
+        message.innerHTML = "";
+    };
+    document.getElementById("pass2").onchange = function () {
+        var message = document.getElementById('notif');
+        message.innerHTML = "";
+    };
+
+
     document.getElementById("pass1").onclick = function () {
         myFunction()
     };
