@@ -95,6 +95,10 @@
                                                         <i class="glyphicon glyphicon-trash icon-white"></i>
                                                         Delete
                                                     </a>
+                                                    <a class="btn btn-success" onclick="addSlide(@x.product_id.ToString().Trim())">
+                                                        <i class="glyphicon glyphicon-play-circle icon-white"></i>
+                                                        Slider
+                                                    </a>
                                                 </td>
                                             </tr>
                                         }
@@ -112,6 +116,22 @@
     </div><!--/.fluid-container-->
 </body>
 <script>
+    function addSlide(x)
+    {
+        var temp = x;
+        $.post("/Admin/AddSlider", { id: temp },
+          function (data) {
+              if(data=="true")
+              {
+                  alert("Product added to Slider!");
+              }
+              else{
+                  alert("Product not added to Slider!");
+              }           
+          });
+
+    }
+
     document.getElementById("searchButton").onclick = function () {
         proCheck()
     }

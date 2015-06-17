@@ -41,18 +41,18 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            @using (Html.BeginForm("AddCatagory", "Admin", FormMethod.Post))
-                                            {
-                                                <td><input type="text" class="form-control" name="catagories_id" placeholder="catagories_id" required /></td>
-                                                <td><input type="text" class="form-control" name="catagories_name" placeholder="catagories_name" required /></td>
-                                                <td><input type="text" class="form-control" name="catagories_tag" placeholder="catagories_tag" required /></td>
-                                                <td>
-                                                    <button type="submit" class="btn btn-success" id="AddButton">
-                                                        Add <i class="glyphicon glyphicon-zoom-in icon-white"></i>
-                                                    </button>                                                                                                       
-                                                </td>
-                                            }
-                                        </tr>                                  
+
+                                            <td><input type="text" class="form-control" name="catagories_id" id="catagories_id" placeholder="catagories_id" required /></td>
+                                            <td><input type="text" class="form-control" name="catagories_name" id="catagories_name" placeholder="catagories_name" required /></td>
+                                            <td><input type="text" class="form-control" name="catagories_tag" id="catagories_tag" placeholder="catagories_tag" required /></td>
+                                            <td>
+                                                <button type="submit" class="btn btn-success" id="AddButton">
+                                                    Add <i class="glyphicon glyphicon-zoom-in icon-white"></i>
+                                                </button>
+                                            </td>
+
+                                        </tr>
+
 
                                         @foreach (var c in Model)
                                         {
@@ -60,7 +60,7 @@
                                                 <td>@c.catagories_id</td>
                                                 <td>@c.catagories_name</td>
                                                 <td>@c.catagories_tag</td>
-                                                <td class="center">                                                  
+                                                <td class="center">
                                                     <a class="btn btn-info" href="~/Admin/CatagoryUpdate?id=@c.catagories_id">
                                                         <i class="glyphicon glyphicon-edit icon-white"></i>
                                                         Edit
@@ -75,6 +75,7 @@
                                     </tbody>
 
                                 </table>
+                               
                             </div>
                         </div>
                     </div>
@@ -89,12 +90,28 @@
 <script>
     $(document).ready(function () {       
         $("#AddButton").on("click", function () {
-            alert('Catagory has been added!');
+            catCheck();
         });
-
     });
     function Delete()
     {
         alert('Catagory has been Deleted!');
+    }
+    function catCheck()
+    {        
+        var cat_id = $("#catagories_id").val();
+        var cat_name = $("#catagories_name").val();
+        var cat_tag = $("#catagories_tag").val();
+      
+        $.post("/Admin/AddCatagory", { cat_id: cat_id, cat_name: cat_name, cat_tag: cat_tag },
+            function (data) {
+                if (data == "false") {
+                    alert("Category ID already exists!")
+                }
+                else {
+                    window.location.reload();
+                }
+            });
+        
     }
 </script>

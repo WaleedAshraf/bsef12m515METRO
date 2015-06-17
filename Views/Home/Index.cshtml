@@ -7,7 +7,18 @@
 @model IEnumerable<METRO.Models.catagory>
 @{
     List<product> x = ViewBag.Pro;
-    List<product> y = ViewBag.Like;
+    List<product> y;
+    if(ViewBag.Like==null)
+    {
+        y = ViewBag.Pro;
+    }
+    else{
+        
+         y = ViewBag.Like;        
+    }
+
+    List<slider> slider = (List<slider>)ViewBag.slider;
+   
 }
 
 <head>
@@ -19,63 +30,69 @@
 
 
 <body>
-   <section>
-        <!--slider-->
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div id="slider-carousel" class="carousel slide" data-ride="carousel" style="margin-bottom:15px">
-                        <ol class="carousel-indicators">
-                            <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
-                            <li data-target="#slider-carousel" data-slide-to="1"></li>
-                            <li data-target="#slider-carousel" data-slide-to="2"></li>
-                        </ol>
+    @{
+        if (slider.Count > 0 && slider!=null)
+        {
+            <section>
+                <!--slider-->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
 
-                        <div class="carousel-inner">
-                            <div class="item active">
-                                <div class="col-sm-6">
-                                    <h1><span>M</span>etro</h1>
-                                    <h2>Cash and Carry </h2>
-                                    <a href="/Product/Index?id=@x.ElementAt(0).product_id" class="btn btn-default get">Check it now</a>
-                                </div>
-                                <div class="col-sm-6">
-                                    <img style="height:200px;width:auto" src="~/Content/images/Product/@x.ElementAt(0).product_image" class="productItem img-responsive" alt="" />
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="col-sm-6">
-                                    <h1><span>M</span>etro</h1>
-                                    <h2>Cash and Carry </h2>
-                                    <a href="/Product/Index?id=@x.ElementAt(1).product_id" class="btn btn-default get">Check it Now</a>
-                                </div>
-                                <div class="col-sm-6">
-                                    <img style="height:200px;width:auto" src="~/Content/images/Product/@x.ElementAt(1).product_image" class="productItem img-responsive" alt="" />
-                                </div>
-                            </div>
-                            <div class="item">
+                            <div id="slider-carousel" class="carousel slide" data-ride="carousel" style="margin-bottom:15px">
+                                <ol class="carousel-indicators">
+                                    <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+                                    @{
+                                        for (int i = 1; i < slider.Count; i++)
+                                        {
+                                            <li data-target="#slider-carousel" data-slide-to="@i"></li>
+                                        }          
+                                    }
+                                </ol>
 
-                                <div class="col-sm-6">
-                                    <h1><span>M</span>etro</h1>
-                                    <h2>Cash and Carry </h2>
-                                    <a href="/Product/Index?id=@x.ElementAt(2).product_id" class="btn btn-default get">Check it now</a>
+                                <div class="carousel-inner">
+                                    <div class="item active">
+                                        <div class="col-sm-6">
+                                            <h1><span>M</span>etro</h1>
+                                            <h2>Cash and Carry </h2>
+                                            <a href="/Product/Index?id=@slider.ElementAt(0).product_id" class="btn btn-default get">Check it now</a>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <img style="height:200px;width:auto" src="~/Content/images/Product/@slider.ElementAt(0).product.product_image" class="productItem img-responsive" alt="" />
+                                        </div>
+                                    </div>
+
+                                    @{
+                                        for (int temp = 1; temp < slider.Count; temp++)
+                                        {
+                                            <div class="item">
+                                                <div class="col-sm-6">
+                                                    <h1><span>M</span>etro</h1>
+                                                    <h2>Cash and Carry </h2>
+                                                    <a href="/Product/Index?id=@slider.ElementAt(temp).product_id" class="btn btn-default get">Check it Now</a>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <img style="height:200px;width:auto" src="~/Content/images/Product/@slider.ElementAt(temp).product.product_image" class="productItem img-responsive" alt="" />
+                                                </div>
+                                            </div>
+                                        }
+                                    }
                                 </div>
-                                <div class="col-sm-6">
-                                    <img style="height:200px;width:auto" src="~/Content/images/Product/@x.ElementAt(2).product_image" class="productItem img-responsive" alt="" />
-                                </div>
+                                <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+                                    <i class="fa fa-angle-left"></i>
+                                </a>
+                                <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
                             </div>
+
                         </div>
-                        <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
-                            <i class="fa fa-angle-left"></i>
-                        </a>
-                        <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
-                            <i class="fa fa-angle-right"></i>
-                        </a>
                     </div>
-
                 </div>
-            </div>
-        </div>
-    </section><!--/slider-->
+            </section><!--/slider-->
+        }
+    }
+ 
 
     <section>
         <div class="container">

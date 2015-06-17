@@ -138,6 +138,11 @@
                                     <li><a href="/Logon" @{if (Session["Page"] == "Login") { <text> class="active" </text> }}><i class="fa fa-lock"></i> Login</a></li>
                                 }
                                 }
+                                @{if (Session["ADMIN"] != null)
+                                {
+                                    <li><a href="/Admin/Dashboard"><i class="fa fa-user"></i>Admin Panel</a></li>
+                                }
+                                }
                             </ul>
                         </div>
                     </div>

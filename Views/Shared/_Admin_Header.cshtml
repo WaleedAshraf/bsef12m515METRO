@@ -34,15 +34,14 @@
     <meta charset="utf-8">
     <title>METRO ADMIN</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
     <meta name="author" content="Waleed Ashraf">
 
     <!-- The styles -->
     <link id="bs-css" href="~/Content/css/bootstrap-cerulean.min.css" rel="stylesheet">
 
     <link href="~/Content/css/charisma-app.css" rel="stylesheet">
-    <link href='~/Content/bower_components/fullcalendar/dist/fullcalendar.css' rel='stylesheet'>
-    <link href='~/Content/bower_components/fullcalendar/dist/fullcalendar.print.css' rel='stylesheet' media='print'>
+    @*<link href='~/Content/bower_components/fullcalendar/dist/fullcalendar.css' rel='stylesheet'>
+    <link href='~/Content/bower_components/fullcalendar/dist/fullcalendar.print.css' rel='stylesheet' media='print'>*@
     <link href='~/Content/bower_components/chosen/chosen.min.css' rel='stylesheet'>
     <link href='~/Content/bower_components/colorbox/example3/colorbox.css' rel='stylesheet'>
     <link href='~/Content/bower_components/responsive-tables/responsive-tables.css' rel='stylesheet'>
@@ -88,7 +87,7 @@
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a href="/Admin/UserView?id=29">Profile</a></li>
+                    <li><a href="/Admin/UserView?id=@Session["USERID"]">Profile</a></li>
                     <li class="divider"></li>
                     <li><a href="/Account/Logout">Logout</a></li>
                 </ul>
@@ -125,6 +124,9 @@
                     </li>
                     <li @{if (Session["Page"] == "AllCatagories") { <text> class="active" </text>                }}>
                         <a class="ajax-link" href="/Admin/ViewCatagories"><i class="glyphicon glyphicon-list"></i><span>Catagories</span></a>
+                    </li>
+                    <li @{if (Session["Page"] == "Slider") { <text> class="active" </text>                 }}>
+                        <a class="ajax-link" href="/Admin/Slider"><i class="glyphicon glyphicon-list"></i><span>Slider</span></a>
                     </li>
 
                 </ul>

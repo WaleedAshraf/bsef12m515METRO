@@ -21,6 +21,8 @@
         <AssociationConnector Association="MyDataModel.FK_likes_ToTable_customers" />
         <AssociationConnector Association="MyDataModel.FK_likes_ToTable_products" />
         <EntityTypeShape EntityType="MyDataModel.hit" Width="1.75" PointX="12" PointY="2.125" />
+        <EntityTypeShape EntityType="MyDataModel.slider" Width="1.875" PointX="4.125" PointY="8.125" />
+        <AssociationConnector Association="MyDataModel.FK_slider_ToTable_products" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

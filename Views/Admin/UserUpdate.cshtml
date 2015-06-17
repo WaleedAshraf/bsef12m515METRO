@@ -26,7 +26,7 @@
                 <div class="row">
                     <div class="box col-md-6">
                         <div class="box-inner" style="border:thin;padding:10px">
-                            @using (Html.BeginForm("UpdateUser", "Admin", FormMethod.Post))
+                            @using (Html.BeginForm("UpdateUser", "Admin", FormMethod.Post, new { onsubmit = "return Echeck()" }))
                             {
                                 <input type="text" name="customer_id" hidden value="@Model.customer_id" />
                                 @Html.Label("First Name");                               
@@ -36,7 +36,7 @@
                                 @Html.Label("Gender");
                                 <input name="customer_gender" type="text" class="form-control" value="@Model.customer_gender" required>
                                 @Html.Label("Email");
-                                <input name="customer_email" type="email" class="form-control" value="@Model.customer_email" required>
+                                <input name="customer_email" id="customer_email" type="email" class="form-control" value="@Model.customer_email" required>
                                 @Html.Label("Address");
                                 <textarea name="customer_address" class="form-control" value="@Model.customer_address" required>@Model.customer_address</textarea>
                                 @Html.Label("City");
@@ -50,7 +50,9 @@
                                 <input type="submit" name="SubmitButton" id="SubmitButton" class="btn btn-success" value="Update Details" />
                                 <br /><br />
                             }
-                            
+                            <label id="emailnotif" style="color:orangered; style=" font-family:'times new roman', times, serif"></label>
+                            <label id="notification" style="color:orangered; font-family:'Times New Roman', Times, serif"></label>
+
                                
                             
                             <h3>Change Your Password</h3>
@@ -76,10 +78,43 @@
     </div><!--/.fluid-container-->
 </body>
 <script>
+    function Echeck() {       
+        var message = document.getElementById('notification');
+        var status = document.getElementById('emailnotif').innerText;
+
+        
+        if (status == "Email is not available!") {
+            message.innerHTML = "";
+            return false;
+        }
+
+        else
+            return true;
+    }
+    document.getElementById("customer_email").onchange = function () {
+        myFunction()
+    };
+    function myFunction() {
+        var name = $("#customer_email").val();
+        var status = $("#emailnotif");
+        status.html("Checking....");
+
+        $.post("/Logon/CheckEmail", { username: name },
+            function (data) {
+                if (data == "true") {
+                    status.text("Email is not available!");
+                    
+                }
+                else {
+                    status.text("Email is available!");
+                    
+                }
+            });
+    }
+
+
     $(document).ready(function () {
-        $("#SubmitButton").on("click", function () {
-            alert('Changes have been saved!');
-        });
+       
         document.getElementById("passSub").onclick = function () {
             check()
         };

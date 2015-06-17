@@ -2,65 +2,120 @@
     ViewBag.Title = "Index";
     Session["Page"] = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
+@using METRO.Models;
 
-<section id="form">
-    <!--form-->
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-4 col-sm-offset-1">
-                <div class="login-form">
-                    <!--login form-->
-                    <h2>Login to your account</h2>
-                    
-                    <input type="email" class="form-control" placeholder="Email Address" name="email" id="logEmail" required />
-                    <br />
-                    <input type="password" class="form-control" placeholder="Password" name="password" id="logPass" required />
-                    <br />
-                    <button type="submit" id="logButton" class="btn btn-default">Login</button>
-                    <br />
-                    <label id="lognotif" style="color:orangered; font-family:'Times New Roman', Times, serif"></label>
-                    
-                </div><!--/Logon form-->
-            </div>
-            <div class="col-sm-1">
-                <h2 class="or">OR</h2>
-            </div>
-            <div class="col-sm-5">
-                <div class="signup-form">
-                    <!--sign up form-->
-                    <h2>New User Signup!</h2>
-                    <form action="/Logon/UserSignup" onsubmit="return check()" method="post">
-                        <input type="text" placeholder="First Name" name="customer_firstname" required />
-                        <input type="text" placeholder="Last Name" name="customer_lastname" required />
-                        <input type="email" placeholder="Email Address" name="customer_email" id="customer_email" required />
+@model METRO.Models.CustomerMetaData
 
-                        <label >Male <input type="radio" name="customer_gender" value="Male" class="glyphicon"  checked /></label>
+<head>
+    <title>METRO</title>
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+</head>
 
-                        <label >Female <input type="radio" name="customer_gender" value="Female" class="glyphicon"  /></label>
-                        
-                        
+
+<body>
+
+    <section id="form">
+        <!--form-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 col-sm-offset-1">
+                    <div class="login-form">
+                        <!--login form-->
+                        <h2>Login to your account</h2>
+
+                        <input type="email" class="form-control" placeholder="Email Address" name="email" id="logEmail" required />
                         <br />
+                        <input type="password" class="form-control" placeholder="Password" name="password" id="logPass" required />
+                        <br />
+                        <button id="logButton" class="btn btn-default" onclick="logCheck()">Login</button>
+                        <br />
+                        <label id="lognotif" style="color:orangered; font-family:'Times New Roman', Times, serif"></label>
 
-                        <input type="text" placeholder="Address" name="customer_address" required />
-                        <input type="text" placeholder="City" name="customer_city" required />
-                        <input type="text" placeholder="Telephone" name="customer_telephone" required />
-                        <input type="text" placeholder="Mobile" name="customer_mobile" required />
-                        <input onselect='return emailcheck()' type="password" placeholder="Password" name="customer_password" id="pass1" required />
-                        <input type="password" placeholder="Confirm Passowrd" name="customer_password2" id="pass2" required />
-                        <button type="submit" class="btn btn-default">Signup</button>
-                    </form>
-                    <label id="notif" style="color:orangered; font-family:'Times New Roman', Times, serif" ></label>
-                    <label id="emailnotif" style="font-family:'Times New Roman', Times, serif" ></label>
-                    
-                </div><!--/sign up form-->
+                    </div><!--/Logon form-->
+                </div>
+                <div class="col-sm-1">
+                    <h2 class="or">OR</h2>
+                </div>
+                <div class="col-sm-5">
+                    <div class="signup-form">
+                        <!--sign up form-->
+                        <h2>New User Signup!</h2>
+                        @using (Html.BeginForm("UserSignup", "Logon", FormMethod.Post, new { onsubmit = "return check()" }))
+                        {
+                            
+                            @Html.ValidationSummary(true);
+
+                            <span>First Name<label>*</label></span>
+                            @Html.TextBoxFor(c => c.customer_firstname)
+                            @Html.ValidationMessageFor(c => c.customer_firstname, "", new { style = "color:orangered" })
+                            <br />                           
+
+                            <span>Last Name<label>*</label></span>
+                            @Html.TextBoxFor(c => c.customer_lastname)
+                            @Html.ValidationMessageFor(c => c.customer_lastname, "", new { style = "color:orangered" })
+                            <br />
+                            
+                            <span>Email<label>*</label></span>
+                            @Html.TextBoxFor(c => c.customer_email, new { type="email"})
+                            @Html.ValidationMessageFor(c => c.customer_email, "", new { style = "color:orangered" })
+                            <br />
+                          
+                            <span>Male</span>
+                            @Html.RadioButtonFor(c => c.customer_gender, "Male", new { @class = "glyphicon", @checked = "checked" })
+                               
+                            
+                            <span>Female</span>
+                            @Html.RadioButtonFor(c => c.customer_gender, "Female", new { @class = "glyphicon" })
+                            <br />
+                            
+                            <span>Address<label>*</label></span>
+                            @Html.TextAreaFor(c => c.customer_address);
+                            @Html.ValidationMessageFor(c => c.customer_address, "", new { style = "color:orangered" })
+                            <br />
+                            
+                            <span>City<label>*</label></span>
+                            @Html.TextBoxFor(c => c.customer_city)
+                            @Html.ValidationMessageFor(c => c.customer_city, "", new { style = "color:orangered" })
+                            <br />
+                            
+                            <span>Telephone<label>*</label></span>
+                            @Html.TextBoxFor(c => c.customer_telephone, new { type = "number" })
+                            @Html.ValidationMessageFor(c => c.customer_telephone, "", new { style = "color:orangered" })
+                            <br />
+                            
+                            <span>Mobile<label>*</label></span>
+                            @Html.TextBoxFor(c => c.customer_mobile, new { type = "number" })
+                            @Html.ValidationMessageFor(c => c.customer_mobile, "", new { style = "color:orangered" })
+                            <br />
+                            
+                            <span>Password<label>*</label></span>
+                            @Html.TextBoxFor(c => c.customer_password, new { type = "password" })
+                            @Html.ValidationMessageFor(c => c.customer_password, "", new { style = "color:orangered" })
+                            <br />
+                            
+                            <input type="password" placeholder="Confirm Passowrd" name="customer_password2" id="pass2" required />
+
+                            <button type="submit" class="btn btn-default">Signup</button>
+
+                          
+                        }
+
+                        <label id="notif" style="color:orangered; font-family:'Times New Roman', Times, serif"></label>
+                        <label id="emailnotif" style="font-family:'Times New Roman', Times, serif"></label>
+
+                    </div><!--/sign up form-->
+                </div>
             </div>
         </div>
-    </div>
-</section><!--/form-->
-<script>  
+    </section><!--/form-->
+</body>
+<script>
     function check() {
-        var pass1 = document.getElementById('pass1');
+        var pass1 = document.getElementById('customer_password');
         var pass2 = document.getElementById('pass2');
         var message = document.getElementById('notif');
         var status = document.getElementById('emailnotif').innerText;
@@ -69,15 +124,13 @@
             message.innerHTML = "Passwords Do Not Match!"
             return false;
         }
-        else if (status == "Email is not available!")
-        {
+        else if (status == "Email is not available!") {
             message.innerHTML = "";
             return false;
         }
-           
+
         else
-            return true; 
-                
+            return true;
     }
     document.getElementById("pass1").onclick = function () {
         myFunction()
@@ -90,10 +143,9 @@
         $.post("/Logon/CheckEmail", { username: name },
             function (data) {
                 if (data == "true") {
-                    status.text("Email is not available!");                   
+                    status.text("Email is not available!");
                 }
-                else
-                {
+                else {
                     status.text("Email is available!");
                 }
             });
@@ -102,14 +154,14 @@
         logCheck()
     }
 
-    function loginCheck() {      
+    function loginCheck() {
 
         var status = document.getElementById('lognotif').innerText;
         if (status == "Wrong Email or Password!") {
             return false;
         }
         else
-            return true;     
+            return true;
     }
 
     function logCheck() {
@@ -121,13 +173,11 @@
         $.post("/Logon/UserLogin", { email: email, password: password },
             function (data) {
                 if (data == "false") {
-                    status.text("Wrong Email or Password!");  
+                    status.text("Wrong Email or Password!");
                 }
-                else
-                {
+                else {
                     window.location.assign("/Logon/UserFound?form=" + email);
                 }
             });
     }
 </script>
- 

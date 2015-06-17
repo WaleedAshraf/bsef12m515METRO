@@ -27,7 +27,7 @@
 
             <div class="col-md-8">
 
-                <form class="form-group col-md-8" action="/Account/UpdateUser" method="post">
+                <form class="form-group col-md-8" action="/Account/UpdateUser" method="post" , onsubmit="return Echeck()">
                     <input type="text" name="customer_id" hidden value="@Model.customer_id" />
                     <label>First Name</label>
                     <input name="customer_firstname" type="text" class="form-control" value="@Model.customer_firstname" required />
@@ -36,7 +36,7 @@
                     <label>Gender</label>
                     <input name="customer_gender" type="text" class="form-control" value="@Model.customer_gender" required>
                     <label>Email</label>
-                    <input name="customer_email" type="email" class="form-control" value="@Model.customer_email" required>
+                    <input name="customer_email" id="customer_email" type="email" class="form-control" value="@Model.customer_email" required>
                     <label>Address</label>
                     <textarea name="customer_address" class="form-control" value="@Model.customer_address" required>@Model.customer_address</textarea>
                     <label>City</label>
@@ -48,7 +48,11 @@
                     <input type="text" name="customer_password" hidden value="" />
                     <br />
                     <input type="submit" name="SubmitButton" id="SubmitButton" class="btn btn-success" value="Update Details" />
-                    <br /><br />
+                    <br />
+                    <label id="emailnotif" style="color:orangered; style=" font-family:'times new roman', times, serif"></label>
+                    <label id="notification" style="color:orangered; font-family:'Times New Roman', Times, serif"></label>
+
+                    <br />
                 </form>
                 <div class="form-group col-md-8">
                     <h3>Change Your Password</h3>
@@ -74,10 +78,44 @@
 </div>
 <!-- CONATINER END -->
 <script>
+
+    function Echeck() {       
+        var message = document.getElementById('notification');
+        var status = document.getElementById('emailnotif').innerText;
+
+        
+        if (status == "Email is not available!") {
+            message.innerHTML = "";
+            return false;
+        }
+
+        else
+            return true;
+    }
+    document.getElementById("customer_email").onchange = function () {
+        myFunction()
+    };
+    function myFunction() {
+        var name = $("#customer_email").val();
+        var status = $("#emailnotif");
+        status.html("Checking....");
+
+        $.post("/Logon/CheckEmail", { username: name },
+            function (data) {
+                if (data == "true") {
+                    status.text("Email is not available!");                   
+                }
+                else {
+                    status.text("Email is available!");
+                    
+                }
+            });
+    }
+
+
+
     $(document).ready(function () {
-        $("#SubmitButton").on("click", function () {
-            alert('Changes have been saved!');
-        });
+        
 
         document.getElementById("passSub").onclick = function () {
             check()
